@@ -1,6 +1,10 @@
 from serial import Serial
+from time import time
 import sys
 
+OVERLOAD_N = 5
+OVERLOAD_LBF = 1.1
+OVERLOAD_KGF = 0.5
 
 class FDMeter:
 	def __init__(self, printer_port, force_gauge_port,
@@ -175,6 +179,39 @@ class FDMeter:
 		print(f"Zeroed Z axis, backed off to {self.z}")
 
 
+	def push_test(self, z_inc=-.25, n_samples=1, stop_after=15,
+							 return_to_zero=True) -> str:
+		"""Conduct a pushing force test. Drop the meter until the force goes
+		non-zero, then drop until it goes until zero or the meter has been dropped
+		more than `stop_after` mm."""
+		if z_inc >= 0:
+			raise ValueError(f"z_inc must be < 0, not {z_inc}")
+		if (f := self.get_force()) != 0:
+			raise ValueError(f"Force isn't 0, it's {f}")
+
+		f = 0
+		while f == 0:
+			self.move_z(z_inc)
+			f = self.get_force()
+
+		print('\nSTART PUSH TEST -----')
+
+		data = ['Timestamp,Displacement (mm),Force (Kgf)']
+		rel_z = 0
+		while f != 0 and abs(rel_z) < stop_after:
+			line = ','.join(map(str,(time(), self.z, f := self.avg_force(n=n_samples))))
+			print(line)
+			data.append(line)
+			self.move_z(z_inc)
+
+		print('END PUSH TEST -----\n')
+
+		if return_to_zero:
+			assert self.z is not None
+			self.move_z(-self.z)
+
+		return '\n'.join(data)
+
 
 def main(force_gauge_port, printer_port, *,
 		 force_gauge_baud=2400, printer_baud=115200,
@@ -182,7 +219,12 @@ def main(force_gauge_port, printer_port, *,
 		 do_zero=True,
 		 backoff_at_least=4,
 		 first_move_z_by=0,
-		 exit_after_first_z_move=False) -> None:
+		 exit_after_first_z_move=False,
+		 do_push_test=False,
+		 n_samples=1,
+		 outfile='',
+		 return_to_zero_after_test=True,
+		) -> None:
 
 	meter = FDMeter(printer_port, force_gauge_port,
 					printer_baud, force_gauge_baud,
@@ -200,6 +242,14 @@ def main(force_gauge_port, printer_port, *,
 	if do_zero:
 		print('Zero z axis!')
 		meter.zero_z_axis(backoff_at_least=backoff_at_least)
+
+	if do_push_test:
+		csv = meter.push_test(n_samples=n_samples,
+												return_to_zero=return_to_zero_after_test)
+		if outfile:
+			with open(outfile, 'w') as f:
+				f.write(csv)
+			print(f'Saved data to {outfile}')
 
 
 if __name__ == "__main__":
