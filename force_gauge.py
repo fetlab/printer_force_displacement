@@ -12,6 +12,16 @@ class FDMeter:
 		self.z: float|None = None
 		self.precision: int|None = None
 
+		# Init printer communication
+		print(self.G('M114'))
+		# Set printer to relative mode
+		self.G('G91')
+
+		# Init force gauge communication
+		if (f := self.get_force()) > 0:
+			raise ValueError(f'Force on startup is {f}, but should be zero')
+		print(f'Force now {self.get_force()}')
+
 
 	def z_endstop(self) -> bool:
 		self.printer.reset_input_buffer()
@@ -54,17 +64,24 @@ class FDMeter:
 		# 	Kgf: -0.000|-0.000 -> -0.000-0.000-0.000 ->  -0.00-00.00-00.00-
 		print('Please make the force meter read negative')
 
-		#
 		self.force.reset_input_buffer()
+
 		val = b''
-		while len(val) < 6:
+		#Loop to account for serial timeout
+		while len(val) < 6 or val.count(b'-') != 2:
 			val = self.force.read_until(b'-')
 			val += self.force.read_until(b'-')
-		between = val.split(b'-')[1]
+
+		try:
+			between = val.split(b'-')[1]
+		except IndexError:
+			print(f'{between=}')
+			raise
+
 		if len(between) != 5:
-			raise ValueError(f"Too many bytes between '-'s in {between.decode()}")
+			raise ValueError(f"Too many bytes between '-'s in '{between.decode()}'")
 		if b'.' not in between:
-			raise ValueError(f"Didn't find '.' in {between.decode()}")
+			raise ValueError(f"Didn't find '.' in '{between.decode()}'")
 
 		self.precision = len(between.split(b'.')[1])
 		if self.precision not in [3,4]:
@@ -126,7 +143,7 @@ class FDMeter:
 		return z
 
 
-	def zero_z_axis(self, z_coarse_inc=-1, z_fine_inc=-.25) -> None:
+	def zero_z_axis(self, z_coarse_inc=-1, z_fine_inc=-.25, backoff_at_least=0) -> None:
 		"""Manually zero the printer on z. Drop z by z_coarse_inc until either the endstop closes or
 		the force gauge registers != 0, then back off and do it again with
 		z_fine_inc."""
@@ -153,7 +170,7 @@ class FDMeter:
 		self.z = 0
 
 		#Finally back off again
-		self.move_z(-backoff_amount)
+		self.move_z(max(abs(backoff_amount), backoff_at_least))
 
 		print(f"Zeroed Z axis, backed off to {self.z}")
 
@@ -162,6 +179,8 @@ class FDMeter:
 def main(force_gauge_port, printer_port, *,
 		 force_gauge_baud=2400, printer_baud=115200,
 		 force_gauge_timeout=1, printer_timeout=None,
+		 do_zero=True,
+		 backoff_at_least=4,
 		 first_move_z_by=0,
 		 exit_after_first_z_move=False) -> None:
 
@@ -169,28 +188,18 @@ def main(force_gauge_port, printer_port, *,
 					printer_baud, force_gauge_baud,
 					printer_timeout, force_gauge_timeout)
 
-	# Init printer communication
-	print(meter.G('M114'))
-	# Set printer to relative mode
-	meter.G('G91')
-
 	if first_move_z_by:
 		meter.move_z(first_move_z_by)
 		if exit_after_first_z_move:
 			print(f'Moved by {first_move_z_by}, exiting')
 			sys.exit(0)
 
-	# Init force gauge communication
-	if (f := meter.get_force()) > 0:
-		raise ValueError(f'Force on startup is {f}, but should be zero')
-	print(f'Force now {meter.get_force()}')
-
 	z = meter.z_endstop()
 	print(f'endstop {z}')
 
-
-	print('Zero!')
-	meter.zero_z_axis()
+	if do_zero:
+		print('Zero z axis!')
+		meter.zero_z_axis(backoff_at_least=backoff_at_least)
 
 
 if __name__ == "__main__":
