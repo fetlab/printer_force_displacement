@@ -109,6 +109,11 @@ class FDMeter:
 			self.move_z(inc)
 
 
+	def move_z_until_nonzero_force(self, inc:float):
+		while (f := self.get_force()) == 0:
+			self.move_z(inc)
+
+
 	def _drop_z_until_stop(self, inc:float) -> float:
 		if inc >= 0: raise ValueError(f"Bad inc: {inc} >= 0")
 		z:float = 0
