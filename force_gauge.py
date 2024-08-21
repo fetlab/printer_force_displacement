@@ -10,21 +10,22 @@ class FDMeter:
 	def __init__(self, printer_port, force_gauge_port,
 				 printer_baud=115200, force_gauge_baud=2400,
 				 printer_timeout=None, force_gauge_timeout=1) -> None:
-		self.printer = Serial(port=printer_port, baudrate=printer_baud, timeout=printer_timeout)
-		self.force = Serial(port=force_gauge_port, baudrate=force_gauge_baud, timeout=force_gauge_timeout)
 
 		self.z: float|None = None
 		self.precision: int|None = None
 
 		# Init printer communication
+		self.printer = Serial(port=printer_port, baudrate=printer_baud, timeout=printer_timeout)
 		print(self.G('M114'))
 		# Set printer to relative mode
 		self.G('G91')
 
 		# Init force gauge communication
-		if (f := self.get_force()) > 0:
-			raise ValueError(f'Force on startup is {f}, but should be zero')
-		print(f'Force now {self.get_force()}')
+		if force_gauge_port is not None:
+			self.force = Serial(port=force_gauge_port, baudrate=force_gauge_baud, timeout=force_gauge_timeout)
+			if (f := self.get_force()) > 0:
+				raise ValueError(f'Force on startup is {f}, but should be zero')
+			print(f'Force now {self.get_force()}')
 
 
 	def z_endstop(self) -> bool:
@@ -98,7 +99,19 @@ class FDMeter:
 			print("either Lbf or N")
 
 
+	def _read_force(self) -> tuple[float, float]:
+		"""Take one force reading, returning a tuple of (timestamp, force). Assumes
+		the serial port is in a state to read a value in 6 bytes."""
+		val = self.force.read(6)
+		t = time()
+		if len(val) < 6:
+			raise ValueError(f"Only read {len(val)} bytes from force gauge; is it on?")
+		return (t, float(val))
+
+
 	def get_force(self) -> float:
+		"""Get and return one reading from the force meter, leaving the port in a
+		state that the next reading(s) can be taken by reading 6 bytes."""
 		if self.precision is None:
 			self.init_force()
 
@@ -106,10 +119,31 @@ class FDMeter:
 		val = self.force.read_until(b'.')
 		val += self.force.read(self.precision)
 		if len(val) != 6:
-			val = self.force.read(6)
-		if len(val) < 6:
-			raise ValueError(f"Only read {len(val)} bytes from force gauge; is it on?")
+			_, val = self._read_force()
 		return float(val)
+
+
+	def get_force_until_threshold(self, start_threshold=0.0, end_threshold=0.0) -> list[tuple[float,float]]:
+		"""Read force as quickly as possible from the force meter until the
+		force reaches or exceed start_threshold, discarding the measurements.
+		Then read until the force reaches or exceedes end_threshold. Return a list of
+		[(timestamp, force), ...] ."""
+		data : list[tuple[float,float]] = []
+
+		#Init reading and get to the right alignment
+		val = self.get_force()
+		if val == start_threshold:
+			print(f"Wait for force to exceed {start_threshold}")
+		while val == start_threshold:
+			_, val = self._read_force()
+		print(f"Force became {val}")
+
+		print(f"Wait for force to reach {end_threshold}")
+		while val != end_threshold:
+			t, val = self._read_force()
+			data.append((t, val))
+
+		return data
 
 
 	def avg_force(self, n=3) -> float:
@@ -126,7 +160,7 @@ class FDMeter:
 	def move_z(self, inc) -> None:
 		"""Move the Z axis by `inc` mm"""
 		self.G(f'G0 Z{inc}')
-		self.G('M400')
+		self.G('M400')   #Wait for moves to complete
 
 		#Only keep track of z location once we've zeroed z
 		if self.z is not None:
@@ -179,7 +213,7 @@ class FDMeter:
 		print(f"Zeroed Z axis, backed off to {self.z}")
 
 
-	def push_test(self, z_inc=-.25, n_samples=1, stop_after=15,
+	def careful_push_test(self, z_inc=-.25, n_samples=1, stop_after=15,
 							 return_to_zero=True) -> str:
 		"""Conduct a pushing force test. Drop the meter until the force goes
 		non-zero, then drop until it goes until zero or the meter has been dropped
@@ -213,11 +247,27 @@ class FDMeter:
 		return '\n'.join(data)
 
 
+#def smooth_push_test(self, displacement:float) -> list[tuple[float, float]]:
+#	"""Conduct a pushing force test based on known displacement values. Return a
+#	list [(timestamp, force),...] ."""
+#	if self.z is None:
+#		raise ValueError("Printer not zeroed, too dangerous to continue.")
+
+#	if (val := self.get_force) != 0:
+#		raise ValueError(f"Probe is touching something; force reads {val}")
+
+#	#Tell the printer to move through the entire length of the displacement
+#	G('G0 {displacement - self.z}')
+
+#	#Now read data as fast as we can!
+
+
+
 def main(force_gauge_port, printer_port, *,
 		 force_gauge_baud=2400, printer_baud=115200,
 		 force_gauge_timeout=1, printer_timeout=None,
 		 do_zero=True,
-		 backoff_at_least=4,
+		 backoff_at_least=1,
 		 first_move_z_by=0,
 		 exit_after_first_z_move=False,
 		 do_push_test=False,
@@ -226,9 +276,14 @@ def main(force_gauge_port, printer_port, *,
 		 return_to_zero_after_test=True,
 		) -> None:
 
-	meter = FDMeter(printer_port, force_gauge_port,
-					printer_baud, force_gauge_baud,
-					printer_timeout, force_gauge_timeout)
+	meter = FDMeter(
+			printer_port        = printer_port,
+			force_gauge_port    = None if exit_after_first_z_move else force_gauge_port,
+			printer_baud        = printer_baud,
+			force_gauge_baud    = force_gauge_baud,
+			printer_timeout     = printer_timeout,
+			force_gauge_timeout = force_gauge_timeout,
+	)
 
 	if first_move_z_by:
 		meter.move_z(first_move_z_by)
@@ -244,7 +299,7 @@ def main(force_gauge_port, printer_port, *,
 		meter.zero_z_axis(backoff_at_least=backoff_at_least)
 
 	if do_push_test:
-		csv = meter.push_test(n_samples=n_samples,
+		csv = meter.careful_push_test(n_samples=n_samples,
 												return_to_zero=return_to_zero_after_test)
 		if outfile:
 			with open(outfile, 'w') as f:
