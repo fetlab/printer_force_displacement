@@ -1,10 +1,14 @@
 from serial import Serial
+from serial.threaded import ReaderThread
+from threaded_force_meter import ThreadedForceMeter
 from time import time
 import sys
 
 OVERLOAD_N = 5
 OVERLOAD_LBF = 1.1
 OVERLOAD_KGF = 0.5
+
+
 
 class FDMeter:
 	def __init__(self, printer_port, force_gauge_port,
@@ -22,10 +26,21 @@ class FDMeter:
 
 		# Init force gauge communication
 		if force_gauge_port is not None:
-			self.force = Serial(port=force_gauge_port, baudrate=force_gauge_baud, timeout=force_gauge_timeout)
+			self.force_serial = Serial(port=force_gauge_port, baudrate=force_gauge_baud, timeout=force_gauge_timeout)
+			self.force_thread = ReaderThread(self.force_serial, ThreadedForceMeter)
+			self.force_thread.start()
+			_, self.force = self.force_thread.connect()
+			while not self.force.ready:
+				pass
 			if (f := self.get_force()) > 0:
 				raise ValueError(f'Force on startup is {f}, but should be zero')
 			print(f'Force now {self.get_force()}')
+
+
+	def get_force(self) -> float:
+		while not self.force.new_value:
+			pass
+		return self.force.value
 
 
 	def z_endstop(self) -> bool:
@@ -44,84 +59,6 @@ class FDMeter:
 		raise ValueError("Didn't find `z_min: {TRIGGERED|open}` in result above")
 
 
-	def init_force(self) -> None:
-		"""Initialze the force meter. The serial port displays exactly what is on
-		the display with no line breaks and no units, so we have to guess how many
-		bytes to read. There's either a `-` or `0`. Look for a `.` to know where to
-		break the string. There's no way to figure out how many bytes to read after
-		a decimal point to divide in the right place until we get a negative number."""
-		#Cases:
-		#  Kgf: -0.000-0.00000.00000.00000.000
-		#       s1.123s1.123s1.123
-		#         .12345.12345.
-		#  Lbf: -01.00-00.71000.13000.13
-		#       s12.34s12.34s12.34
-		#          .12345.12345.
-		#    N: -00.23-00.87000.29000.56
-		#       s12.34s12.34s12.34
-		#          .12345.12345.
-		#
-		# Positive:
-		# 	N/L: 000.00|000.00 -> 000.00000.00000.00 -> 000.00000.00000.00
-		# 	Kgf: 00.000|00.000 -> 00.00000.00000.000 ->  00.00000.00000.000
-		# Negative:
-		# 	N/L: -00.00|-00.00 -> -00.00-00.00-00.00 -> -00.00-00.00-00.00
-		# 	Kgf: -0.000|-0.000 -> -0.000-0.000-0.000 ->  -0.00-00.00-00.00-
-		print('Please make the force meter read negative')
-
-		self.force.reset_input_buffer()
-
-		val = b''
-		#Loop to account for serial timeout
-		while len(val) < 6 or val.count(b'-') != 2:
-			val = self.force.read_until(b'-')
-			val += self.force.read_until(b'-')
-
-		try:
-			between = val.split(b'-')[1]
-		except IndexError:
-			print(f'{between=}')
-			raise
-
-		if len(between) != 5:
-			raise ValueError(f"Too many bytes between '-'s in '{between.decode()}'")
-		if b'.' not in between:
-			raise ValueError(f"Didn't find '.' in '{between.decode()}'")
-
-		self.precision = len(between.split(b'.')[1])
-		if self.precision not in [3,4]:
-			raise ValueError(f"Unknown number of bytes of precison {self.precision}")
-
-		print(f"Found {self.precision} bytes after '.' so unit is ", end='')
-		if self.precision == 3:
-			print("Kgf")
-		elif self.precision == 4:
-			print("either Lbf or N")
-
-
-	def _read_force(self) -> tuple[float, float]:
-		"""Take one force reading, returning a tuple of (timestamp, force). Assumes
-		the serial port is in a state to read a value in 6 bytes."""
-		val = self.force.read(6)
-		t = time()
-		if len(val) < 6:
-			raise ValueError(f"Only read {len(val)} bytes from force gauge; is it on?")
-		return (t, float(val))
-
-
-	def get_force(self) -> float:
-		"""Get and return one reading from the force meter, leaving the port in a
-		state that the next reading(s) can be taken by reading 6 bytes."""
-		if self.precision is None:
-			self.init_force()
-
-		self.force.reset_input_buffer()
-		val = self.force.read_until(b'.')
-		val += self.force.read(self.precision)
-		if len(val) != 6:
-			_, val = self._read_force()
-		return float(val)
-
 
 	def get_force_until_threshold(self, start_threshold=0.0, end_threshold=0.0) -> list[tuple[float,float]]:
 		"""Read force as quickly as possible from the force meter until the
@@ -135,13 +72,13 @@ class FDMeter:
 		if val == start_threshold:
 			print(f"Wait for force to exceed {start_threshold}")
 		while val == start_threshold:
-			_, val = self._read_force()
+			val = self.get_force()
 		print(f"Force became {val}")
 
 		print(f"Wait for force to reach {end_threshold}")
 		while val != end_threshold:
-			t, val = self._read_force()
-			data.append((t, val))
+			val = self.get_force()
+			data.append((time(), val))
 
 		return data
 
@@ -165,6 +102,11 @@ class FDMeter:
 		#Only keep track of z location once we've zeroed z
 		if self.z is not None:
 			self.z += inc
+
+
+	def move_z_until_zero_force(self, inc:float):
+		while (f := self.get_force()) != 0:
+			self.move_z(inc)
 
 
 	def _drop_z_until_stop(self, inc:float) -> float:
@@ -208,7 +150,7 @@ class FDMeter:
 		self.z = 0
 
 		#Finally back off again
-		self.move_z(max(abs(backoff_amount), backoff_at_least))
+		self.move_z_until_zero_force(-z_fine_inc)
 
 		print(f"Zeroed Z axis, backed off to {self.z}")
 
@@ -268,7 +210,7 @@ def main(force_gauge_port, printer_port, *,
 		 force_gauge_timeout=1, printer_timeout=None,
 		 do_zero=True,
 		 backoff_at_least=1,
-		 first_move_z_by=0,
+		 first_move_z_by=0.0,
 		 exit_after_first_z_move=False,
 		 do_push_test=False,
 		 n_samples=1,
