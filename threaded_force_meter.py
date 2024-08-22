@@ -1,3 +1,4 @@
+from time import time
 from serial import Serial
 from serial.threaded import Protocol, ReaderThread
 
@@ -6,6 +7,7 @@ class ThreadedForceMeter(Protocol):
 		self.buffer = bytearray()
 		self.transport = None
 		self._value = None
+		self.timestamp = 0
 		self.new_value = False
 		self.ready = False
 
@@ -51,6 +53,7 @@ class ThreadedForceMeter(Protocol):
 
 	@value.setter
 	def value(self, new_value):
+		self.timestamp = time()
 		self._value = new_value
 		self.new_value = True
 
