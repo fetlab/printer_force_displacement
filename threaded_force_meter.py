@@ -58,6 +58,15 @@ class ThreadedForceMeter(Protocol):
 		self.new_value = True
 
 
+	@property
+	def pushing(self) -> bool:
+		return self._value < 0
+
+	@property
+	def pulling(self) -> bool:
+		return self._value > 0
+
+
 if __name__ == "__main__":
 	import sys
 
