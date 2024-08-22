@@ -32,7 +32,7 @@ class ThreadedForceMeter(Protocol):
 				self.buffer = self.buffer[6:]
 
 		#Only keep the last value
-		if len(self.buffer) >= 6:
+		if self.ready and len(self.buffer) >= 6:
 			rest_pos = 6 * (len(self.buffer)//6)
 			self.value = float(self.buffer[rest_pos-6:rest_pos])
 			self.buffer = self.buffer[rest_pos:]
