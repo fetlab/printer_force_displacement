@@ -4,12 +4,12 @@ from serial.threaded import Protocol, ReaderThread
 
 class ThreadedForceMeter(Protocol):
 	def __init__(self):
-		self.buffer = bytearray()
+		self.buffer    = bytearray()
 		self.transport = None
-		self._value = None
+		self._value    = None
 		self.timestamp = 0
 		self.new_value = False
-		self.ready = False
+		self.ready     = False
 
 
 	def connection_made(self, transport):
@@ -65,4 +65,4 @@ if __name__ == "__main__":
 	with ReaderThread(s, ThreadedForceMeter) as m:
 		while True:
 			if m.new_value:
-				print(f'{m.value=}')
+				print(m.value)
