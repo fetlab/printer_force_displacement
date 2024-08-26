@@ -5,7 +5,8 @@ from threaded_force_meter import ThreadedForceMeter
 from time import time
 from typing import Callable
 from rich import print
-import sys
+from dataclasses import dataclass
+import sys, csv
 
 DEFAULT_FEEDRATE = 180
 
@@ -15,11 +16,29 @@ class Direction(Enum):
 	UP   = 1
 	def flip(self):
 		return self.__class__(self.value * -1)
+	def __str__(self):
+		return 'UP' if self == self.__class__.UP else 'DOWN'
 
 UP = Direction.UP
 DOWN = Direction.DOWN
 #Set sign of `inc` based on `dir`
 inc2dir = lambda inc, direction: abs(inc) * direction.value
+
+@dataclass
+class TestResult:
+	timestamp:    float
+	direction:    Direction
+	displacement: float
+	force:        float
+	testno:       int = -1
+
+
+def results_to_csv(test_results: list[TestResult], outfile=str):
+	fieldnames = list(test_results[0].__dict__.keys())
+	with open(outfile, 'w', newline='') as f:
+		writer = csv.DictWriter(f, fieldnames=fieldnames)
+		writer.writeheader()
+		writer.writerows(r.__dict__ for r in test_results)
 
 
 class FDMeter:
@@ -143,7 +162,7 @@ class FDMeter:
 		return z
 
 
-	def zero_z_axis(self, z_coarse_inc=1, z_fine_inc=.25, direction:Direction=DOWN, backoff_at_least=0) -> None:
+	def zero_z_axis(self, z_coarse_inc=1, z_fine_inc=.25, direction:Direction=DOWN) -> None:
 		"""Manually zero the printer on z. Drop z by z_coarse_inc until either the endstop closes or
 		the force gauge registers != 0, then back off and do it again with
 		z_fine_inc."""
@@ -181,11 +200,29 @@ class FDMeter:
 		print(f"Zeroed Z axis, backed off to {self.z}")
 
 
-	def careful_move_test(self, z_inc, direction:Direction, n_samples=1, stop_after=15,
-							 return_to_zero=True) -> str:
+
+	def test_loop(self, z_inc, repetitions, start_direction:Direction, **kwargs) -> list[TestResult]:
+		"""Conduct `repetitions` cycles of testing. Start in `start_direction`;
+		move by `z_inc`; after snap-through, reverse. Other arguments are passed to
+		`careful_move_test()` Return a CSV-formatted string.
+		"""
+		data: list[TestResult] = []
+		direction = start_direction
+
+		for rep in range(repetitions):
+			data.extend(self.careful_move_test(z_inc, direction, test_no=rep+1, return_to_zero=False, **kwargs))
+			direction = direction.flip()
+			data.extend(self.careful_move_test(z_inc, direction, test_no=rep+1, return_to_zero=False, **kwargs))
+
+		return data
+
+
+
+	def careful_move_test(self, z_inc, direction:Direction, n_samples=1,
+											 stop_after=15, test_no=-1, return_to_zero=True) -> list[TestResult]:
 		"""Conduct a moving force test. Move the meter until the force goes
-		non-zero, then move until it reads zero or the meter has been dropped
-		more than `stop_after` mm."""
+		non-zero (touching), then move until it reads zero (snap-through) or the
+		meter has been dropped more than `stop_after` mm."""
 		print(f'Carefully testing moving {direction} by {z_inc}mm')
 
 		if (f := self.get_force()) != 0:
@@ -193,6 +230,7 @@ class FDMeter:
 
 		z_inc = inc2dir(z_inc, direction)
 		displacement = 0
+		data: list[TestResult] = []
 
 		f = 0
 		while f == 0:
@@ -205,12 +243,16 @@ class FDMeter:
 
 		print('\nSTART PUSH TEST -----')
 
-		data = ['Timestamp,Displacement (mm),Force (Kgf)']
 		rel_z = 0
 		while f != 0 and abs(rel_z) < stop_after:
-			line = ','.join(map(str,(time(), displacement, f := self.avg_force(n=n_samples))))
-			print(line)
-			data.append(line)
+			data.append(TestResult(
+										timestamp=time(),
+										direction=direction,
+										displacement=displacement,
+										force=self.avg_force(n=n_samples),
+										testno=test_no,
+								))
+			print(data[-1])
 			self.move_z(z_inc, direction)
 			displacement += z_inc
 
@@ -219,7 +261,7 @@ class FDMeter:
 		if return_to_zero:
 			self.move_z(displacement, direction.flip(), feedrate=DEFAULT_FEEDRATE)
 
-		return '\n'.join(data)
+		return data
 
 
 	def smooth_move_test(self, displacement:float, direction:Direction, return_to_zero=True, feedrate=60) -> str:
@@ -346,19 +388,20 @@ if __name__ == "__main__":
 			meter.zero_z_axis()
 
 		if do_test:
+			direction = do_test.upper()
 			print(f'Going to do test {do_test}')
 			if smooth_displacement:
 				csv = meter.smooth_move_test(smooth_displacement,
-																 UP if do_test.lower() == 'up' else DOWN,
+																 UP if direction == 'UP' else DOWN,
 														return_to_zero=return_to_zero_after_test)
 			else:
-				csv = meter.careful_move_test(careful_inc,
-																 UP if do_test.lower() == 'up' else DOWN,
+				data = meter.careful_move_test(careful_inc,
+																 UP if direction == 'UP' else DOWN,
 																	n_samples=n_samples,
 														return_to_zero=return_to_zero_after_test)
+
 			if outfile:
-				with open(outfile, 'w') as f:
-					f.write(csv)
+				results_to_csv(data, outfile)
 				print(f'Saved data to {outfile}')
 
 
