@@ -12,17 +12,17 @@ DEFAULT_FEEDRATE = 180
 
 #Movement directions
 class Direction(Enum):
-	DOWN = -1
-	UP   = 1
+	DOWN = 'DOWN'
+	UP   = 'UP'
 	def flip(self):
-		return self.__class__(self.value * -1)
+		return self.__class__('DOWN' if self.value == 'UP' else 'UP')
 	def __str__(self):
 		return 'UP' if self == self.__class__.UP else 'DOWN'
 
 UP = Direction.UP
 DOWN = Direction.DOWN
 #Set sign of `inc` based on `dir`
-inc2dir = lambda inc, direction: abs(inc) * direction.value
+inc2dir = lambda inc, direction: abs(inc) * -1 if direction == DOWN else 1
 
 @dataclass
 class TestResult:
