@@ -266,20 +266,60 @@ if __name__ == "__main__":
 	def main(force_gauge_port, printer_port, *,
 			 force_gauge_baud=2400, printer_baud=115200,
 			 force_gauge_timeout=1, printer_timeout=None,
-			 do_zero=True,
-			 backoff_at_least=1,
+
+			 feedrate=DEFAULT_FEEDRATE,
+
 			 first_move_z_up_by=0.0,
 			 first_move_z_down_by=0.0,
-			 feedrate=DEFAULT_FEEDRATE,
 			 exit_after_first_z_move=False,
-			 do_test:parameters.one_of('up', 'down', case_sensitive=False)='',
+			 do_zero=True,
+
+			 do_test:parameters.one_of('UP', 'DOWN', case_sensitive=False)='',
 			 n_samples=1,
 			 careful_inc=.25,
-			 outfile='',
+			 stop_after=15,
 			 return_to_zero_after_test=True,
-			 smooth_displacement=0.0,
+			 outfile='',
+			 # smooth_displacement=0.0,
+
 			 debug_gcode=False,
 			) -> None:
+		"""
+		Serial connection parameters:
+
+		:param force_gauge_port: Serial port for the force gauge.
+		:param force_gauge_baud: Force gauge serial port baud rate.
+		:param printer_port: Serial port for the printer.
+		:param printer_baud: Printer serial port baud rate.
+
+
+		Motion options:
+
+		:param feedrate: Set the default feedrate for moves in mm/minute.
+
+
+		Startup move options:
+
+		:param first_move_z_up_by: Move the Z-axis up by N mm before doing anything else.
+		:param first_move_z_down_by: Move the Z-axis down by N mm before doing anything else.
+		:param exit_after_first_z_move: Exit after first_move_z_{up,down}_by.
+		:param do_zero: Zero the printer by moving down until force is nonzero.
+
+
+		Test options:
+
+		:param do_test: Do a movement test in this direction.
+		:param n_samples: Average this many samples per increment.
+		:param careful_inc: Step this many mm per measurement.
+		:param stop_after: Stop moving after this many mm if no snap-through has happened.
+		:param return_to_zero_after_test: Return to the zeroed point.
+		:param outfile: Write a CSV file here.
+
+
+		Other options:
+
+		:param debug: Print every Gcode command as it is issued.
+		"""
 
 		meter = FDMeter(
 				printer_port        = printer_port,
