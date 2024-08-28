@@ -1,6 +1,7 @@
 from time import time
 from serial import Serial
 from serial.threaded import Protocol, ReaderThread
+from .direction import Direction, UP, DOWN, STILL, force2dir
 
 class ThreadedForceMeter(Protocol):
 	def __init__(self):
@@ -66,6 +67,9 @@ class ThreadedForceMeter(Protocol):
 	def pulling(self) -> bool:
 		return self._value > 0
 
+	@property
+	def direction(self) -> Direction:
+		return force2dir(self._value)
 
 if __name__ == "__main__":
 	import sys
