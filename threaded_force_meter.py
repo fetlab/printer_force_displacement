@@ -1,7 +1,17 @@
+"""
+Force meter for reading forces from serial port force meters of ZP-50 etc
+models.
+
+This code currently assumes the meter is mounted pointing down, so when
+readings are positive, the meter is pushing, and when readings are negative,
+the meter is pulling.
+"""
 from time import time
 from serial import Serial
 from serial.threaded import Protocol, ReaderThread
 from .direction import Direction, UP, DOWN, STILL, force2dir
+
+MAX_FORCE = 3.5
 
 class ThreadedForceMeter(Protocol):
 	def __init__(self):
@@ -54,6 +64,8 @@ class ThreadedForceMeter(Protocol):
 
 	@value.setter
 	def value(self, new_value):
+		if abs(new_value) >= MAX_FORCE:
+			raise ValueError(f"Force of {new_value} exceeded max force threshold {MAX_FORCE}")
 		self.timestamp = time()
 		self._value = new_value
 		self.new_value = True
@@ -61,11 +73,11 @@ class ThreadedForceMeter(Protocol):
 
 	@property
 	def pushing(self) -> bool:
-		return self._value < 0
+		return self._value > 0
 
 	@property
 	def pulling(self) -> bool:
-		return self._value > 0
+		return self._value < 0
 
 	@property
 	def direction(self) -> Direction:

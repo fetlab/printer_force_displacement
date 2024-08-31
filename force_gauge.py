@@ -13,8 +13,50 @@ import sys, csv, json
 DEFAULT_FEEDRATE = 180
 MAX_FEEDRATE = 300    #From marlin Configuration.h or issue M503
 
-def zero(v):    return v == 0
-def nonzero(v): return v != 0
+def sign(v:int|float|Direction) -> int:
+	if isinstance(v, Direction): v = v.sign
+	if v == 0: return  0
+	if v <  0: return -1
+	if v >  0: return  1
+	raise ValueError(f"Can't take sign of {v}")
+
+def zero(v):       return v == 0
+def nonzero(v):    return v != 0
+
+def zeroeps(v):
+	"""Return True if v is 0 or very close to 0, otherwise False."""
+	return abs(v) <= .001
+
+def nonzeroeps(v):
+	"""Return False if v is 0 or very close to 0, otherwise True."""
+	return abs(v) > .001
+
+#Return test functions based on comparison with x
+def oppsign(cmp):
+	"""Return a function `test(val)` which returns True if `cmp` and `val` have
+	opposite signs."""
+	return lambda testval: sign(cmp) + sign(testval) == 0
+
+def oppsign_or_zero(cmp):
+	"""Return a function, test(val), which returns True if `cmp` and `val` have
+	opposite signs or if `val` is 0."""
+	return lambda testval: zero(testval) or oppsign(cmp)(testval)
+
+
+def oppdir_or_zero(direction, force):
+	return oppsign_or_zero(direction)(force)
+
+
+def samedir_or_zero(direction, force):
+	return oppsign_or_zero(direction.flip())(force)
+
+
+def oppdir(direction, force):
+	return oppsign(direction)(force)
+
+
+def samedir(direction, force):
+	return oppsign(direction.flip())(force)
 
 
 @dataclass
@@ -35,9 +77,16 @@ def results_to_json(test_params:dict, test_results: list[TestResult], outfile:Pa
 	"""Save the results to JSON, renaming the output file if it exists. Return
 	the Path that the data was saved to."""
 	if outfile.exists():
-		newoutfile = outfile.with_stem(outfile.stem + '-1')
-		print(f"Warning: outfile exists, saving to {newoutfile}")
+		stem = outfile.stem
+		newoutfile = outfile.with_stem(stem + '-01')
+		if len(p := stem.rsplit('-', maxsplit=1)) > 1:
+			try:
+				newoutfile = outfile.with_stem(f'{p[0]}-{int(p[1])+1:02}')
+			except ValueError:
+				pass
 		return results_to_json(test_params, test_results, newoutfile)
+
+	print(f"Saving to {outfile}")
 	with open(outfile, 'w') as f:
 		json.dump({'test_params': test_params, 'test_results': test_results}, f,
 						indent=2,
@@ -92,9 +141,8 @@ class FDMeter:
 			_, self.force = self.force_thread.connect()
 			while not self.force.ready:
 				pass
-			if (f := self.get_force()) > 0:
-				raise ValueError(f'Force on startup is {f}, but should be zero')
-			print(f'Force now {self.get_force()}')
+			print('   Wait for force to stabilize')
+			print(f'Force now {self.stable_force()}')
 
 
 	def get_force(self) -> float:
@@ -137,6 +185,24 @@ class FDMeter:
 		return sum(vals) / len(vals)
 
 
+	def stable_force(self, n_same=3, max_n=20) -> float:
+		"""Get force readings until `n_same` subsequent readings are the same.
+		Raise an error after `max_n` readings."""
+		same = 0
+		count = 0
+		last = self.get_force()
+		while same < n_same:
+			if (v := self.get_force()) != last:
+				last = v
+				same = 0
+			else:
+				same += 1
+			if (count := count + 1) >= max_n:
+				raise ValueError('Max samples exceeded, readings never stabilized')
+		return last
+
+
+
 	def G(self, gcode, wait=True) -> str:
 		"""Send a Gcode command and wait for 'ok\n'. Return the printer's response, if any."""
 		assert gcode
@@ -169,9 +235,34 @@ class FDMeter:
 		most that amount."""
 		dist = 0.0
 		inc = inc2dir(inc, direction)
-		while abs(dist) <= max_move and not test(f := self.get_force()):
+
+		#Get a stable force reading
+		force = self.stable_force()
+
+		while abs(dist) <= max_move and not test(force):
+			if abs(force) > 4.9:
+				raise ValueError(f"Force {force} too high, aborting!")
 			dist = dist + inc
 			self.move_z(inc, direction)
+			force = self.get_force()
+			print(f'    Moved {dist}, force is {force}')
+
+		print(f'    -> Test on force {force} = {test(force)}')
+
+		if not test(force := self.stable_force()):
+			print(f'    Stable force of {force} failed test, trying slowly')
+
+			while abs(dist) <= max_move and not test(force):
+				if abs(force) > 4.9:
+					raise ValueError(f"Force {force} too high, aborting!")
+				dist = dist + inc
+				self.move_z(inc, direction)
+				force = self.stable_force()
+				print(f'    Moved {dist}, stable force is {force}')
+
+		if abs(dist) >= max_move:
+			print(f'  Stopped due to abs({dist}) >= max_move {max_move}')
+
 		return dist
 
 
@@ -191,43 +282,54 @@ class FDMeter:
 		return z
 
 
+	def move_to_zero(self) -> float:
+		"""If force isn't zero, move in the opposite direction until it is."""
+		if (force := self.get_force()) != 0:
+			print(f'Initial force is {force} ({self.force.direction}), moving {self.force.direction.flip()} until 0')
+			moved = self.move_z_until(inc=self.fine_inc,
+															  direction=self.force.direction.flip(),
+																test=zero,
+															  max_move=min(5,abs(self.coarse_inc*10)))
+			print(f'Moved by {moved} to get zero force')
+			return moved
+		return 0
+
+
 	def zero_z_axis(self, direction:Direction=DOWN, backoff=True) -> None:
 		"""Manually zero the printer on z. Move z by `self.coarse_inc` in `direction`
 		until either the endstop closes or the force gauge registers != 0, then
 		back off and do it again with `self.fine_inc`."""
 		rel_z = 0.0
 
-		#If we have a force reading, move in the opposite direction until we get to zero
-		if (force := self.get_force()) != 0:
-			print(f'Initial force is {force}, moving until 0')
-			moved = self.move_z_until(inc=self.fine_inc,
-															  direction=self.force.direction.flip(),
-																test=lambda f:f==0,
-															  max_move=abs(self.coarse_inc*2))
-			print(f'Moved by {moved} to get zero force')
+		self.move_to_zero()
 
 		if force := self.get_force():
-			raise ValueError(f"Uh-oh, force of {force} still nonzero")
+			if force := self.stable_force():
+				raise ValueError(f"Uh-oh, force of {force} still nonzero")
 
 		#Move with coarse movement until we get a stop
-		rel_z += self.move_z_until(inc=self.coarse_inc, direction=direction, test=nonzero)
-		if self.get_force() == 0:
-			raise ValueError("Stopped zeroing but force is 0")
+		print(f'Coarse move {direction} by {self.coarse_inc} until f != 0')
+		rel_z += self.move_z_until(inc=self.coarse_inc, direction=direction, test=nonzeroeps)
+		if self.get_force() == 0 and self.stable_force() == 0:
+				raise ValueError("Stopped zeroing but force is 0")
 
 		#Back off until force is 0
-		self.move_z_until(inc=self.coarse_inc, direction=direction.flip(), test=zero)
+		print(f'Coarse backoff {direction.flip()} by {self.coarse_inc} until f == 0 (now {self.get_force()})')
+		self.move_z_until(inc=self.coarse_inc, direction=direction.flip(), test=oppsign_or_zero(direction.flip()))
 
 		#Drop with fine movement until we get a stop
-		self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzero)
+		print(f'Fine move {direction} by {self.fine_inc} until f != 0 (now {self.get_force()})')
+		self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzeroeps)
 
 		self.z = 0
 		self.zeroed = True
 
 		#Finally back off again until we get zero force
 		if backoff:
+			print(f'Fine backoff {direction.flip()} by {self.fine_inc} until f == 0 (now {self.get_force()})')
 			self.move_z_until(inc=self.fine_inc, direction=direction.flip(), test=zero)
 
-		print(f"Zeroed Z axis, backed off to {self.z}")
+		print(f"Zeroed Z axis, backed off to {self.z}, force = {self.get_force()}")
 
 
 
@@ -255,14 +357,16 @@ class FDMeter:
 
 
 	def careful_move_test(self, z_inc, direction:Direction, n_samples=1,
-											 test_no=-1, return_to_zero=True, **kwargs) -> list[TestResult]:
+											 test_no=-1, return_to_zero=True, stop_after=100,
+											 **kwargs) -> list[TestResult]:
 		"""Conduct a moving force test. Move the meter until the force goes
 		non-zero (touching), then move until it reads zero (snap-through) or the
 		meter has been dropped more than `stop_after` mm."""
 		print(f'Carefully testing moving {direction} by {z_inc}mm')
 
 		if (f := self.get_force()) != 0:
-			raise ValueError(f"Force isn't 0, it's {f}")
+			print(f"Force isn't 0, it's {f}")
+			self.move_to_zero()
 
 		z_inc = inc2dir(z_inc, direction)
 		displacement = 0
@@ -284,21 +388,28 @@ class FDMeter:
 			displacement += z_inc
 			return f
 
-		print(f'\nPRE-MOVE-TEST by {z_inc} ({direction}) until force != 0')
+		#Move until the probe is just touching the object
+		print(f'\nTEST PRE-MOVE by {z_inc} ({direction}) until force != 0')
+		self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzero)
 
-		f = 0
-		while f == 0:
-			f = move_one(z_inc, direction)
-			if((self.force.pushing and direction == UP) or
-				 (self.force.pulling and direction == DOWN)):
-				raise ValueError(f"Force {f} is in the opposite direction of the test {direction}")
+		print(f'\nForce: {self.get_force()} -> START MOVE TEST stepping by {z_inc} ({direction}) -----')
 
-		print(f'\nSTART MOVE TEST stepping by {z_inc} ({direction}) -----')
-
-		while f != 0:
+		#Move in the test direction until the force is zero or the opposite
+		# direction from the test direction
+		f = move_one(z_inc, direction)
+		while (f != 0 or samedir(direction, f)) and abs(displacement) < stop_after:
 			f = move_one(z_inc, direction)
 
-		print(f'END MOVE TEST stepping by {z_inc} ({direction}) -----\n')
+		print(f'Force: {f}; Gate triggered, moving until force is 0')
+
+		#If force isn't zero, move till it is
+		if f != 0:
+			self.move_to_zero()
+			# self.move_z_until(inc=self.fine_inc, direction=self.force.direction.flip(),
+			# 									test=zero, max_move=min(5,abs(z_inc*5)))
+
+		print(f'oppdir_or_zero({direction=}, {f=}) = {oppdir_or_zero(direction, f)}')
+		print(f'Force: {f} -> END MOVE TEST stepping by {z_inc} ({direction}) -----\n')
 
 		if return_to_zero:
 			self.move_z(displacement, direction.flip(), feedrate=DEFAULT_FEEDRATE)
@@ -307,11 +418,14 @@ class FDMeter:
 
 
 	def smooth_move_test(self, target_displacement:float, direction:Direction,
-											return_to_zero=False, feedrate=DEFAULT_FEEDRATE, test_no=-1, **kwargs) -> list[TestResult]:
+											return_to_zero=False, feedrate=DEFAULT_FEEDRATE, test_no=-1,
+											zero_z=True,
+											**kwargs) -> list[TestResult]:
 		"""Conduct a pushing force test based on known displacement values. Feedrate is mm/minute."""
 
 		#Start by zeroing without backoff so the probe is touching
-		self.zero_z_axis(direction=direction, backoff=False)
+		if zero_z:
+			self.zero_z_axis(direction=direction, backoff=False)
 
 		data = [TestResult(
 								timestamp=time(),

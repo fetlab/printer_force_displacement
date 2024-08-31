@@ -18,6 +18,12 @@ class Direction(Enum):
 	def to_json_encodable(self):
 		return str(self)
 
+	@property
+	def sign(self):
+		if self.value == self.__class__.DOWN.value: return -1
+		if self.value == self.__class__.UP.value:   return  1
+		return 0
+
 UP    = Direction.UP
 DOWN  = Direction.DOWN
 STILL = Direction.STILL
@@ -25,9 +31,12 @@ STILL = Direction.STILL
 def inc2dir(inc:float, direction:Direction) -> float:
 	"""Set sign of `inc` based on `dir`"""
 	assert direction in (UP, DOWN)
-	return abs(inc) * (-1 if direction == DOWN else 1)
+	return abs(inc) * direction.sign
 
 
 def force2dir(force:float) -> Direction:
-	"""Return a Direction based on the sign of `force`."""
-	return STILL if force == 0 else UP if force > 0 else DOWN
+	"""Return a Direction based on the sign of `force`. If the meter is moving
+	down, it's pushing, and so the force will be negative."""
+	if force == 0: return STILL
+	if force <  0: return DOWN
+	return UP
