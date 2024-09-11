@@ -12,6 +12,7 @@ import sys, csv, json
 
 DEFAULT_FEEDRATE = 180
 MAX_FEEDRATE = 300    #From marlin Configuration.h or issue M503
+MIN_Z_MOVE = 0.1
 
 def sign(v:int|float|Direction) -> int:
 	if isinstance(v, Direction): v = v.sign
@@ -37,10 +38,19 @@ def oppsign(cmp):
 	opposite signs."""
 	return lambda testval: sign(cmp) + sign(testval) == 0
 
+
+def samesign(cmp):
+	return lambda testval: sign(cmp) == sign(testval)
+
+
 def oppsign_or_zero(cmp):
 	"""Return a function, test(val), which returns True if `cmp` and `val` have
 	opposite signs or if `val` is 0."""
 	return lambda testval: zero(testval) or oppsign(cmp)(testval)
+
+
+def samesign_or_zero(cmp):
+	return lambda testval: zero(testval) or samesign(cmp)(testval)
 
 
 def oppdir_or_zero(direction, force):
@@ -230,14 +240,19 @@ class FDMeter:
 			self.z += inc
 
 
-	def move_z_until(self, inc:float, direction:Direction, test=Callable[[float], bool], max_move=float('inf')) -> float:
+	def move_z_until(self, inc:float, direction:Direction, test=Callable[[float], bool],
+									max_move=float('inf')) -> float:
 		"""Move z by `inc` until `test(force)` is True. If `max` is specified, move by at
 		most that amount."""
 		dist = 0.0
 		inc = inc2dir(inc, direction)
 
-		#Get a stable force reading
-		force = self.stable_force()
+		#Try to get a stable force reading
+		try:
+			force = self.stable_force()
+		except ValueError:
+			force = self.get_force()
+			print(f"Force didn't stabilize, going with {force} and hoping for the best")
 
 		while abs(dist) <= max_move and not test(force):
 			if abs(force) > 4.9:
@@ -282,17 +297,20 @@ class FDMeter:
 		return z
 
 
-	def move_to_zero(self) -> float:
+	def move_to_zero(self, inc:float|None=None) -> float:
 		"""If force isn't zero, move in the opposite direction until it is."""
-		if (force := self.get_force()) != 0:
-			print(f'Initial force is {force} ({self.force.direction}), moving {self.force.direction.flip()} until 0')
-			moved = self.move_z_until(inc=self.fine_inc,
-															  direction=self.force.direction.flip(),
-																test=zero,
-															  max_move=min(5,abs(self.coarse_inc*10)))
-			print(f'Moved by {moved} to get zero force')
-			return moved
-		return 0
+		moved = 0.0
+		inc = (inc or self.fine_inc) * 2
+		while (force := self.get_force()) != 0:
+			inc = min(inc / 2, MIN_Z_MOVE)
+			direction = self.force.direction.flip()
+			print(f'Move to zero: force is {force} ({self.force.direction}), moving by {inc} {direction} until 0')
+			moved += self.move_z_until(inc=inc,
+																direction=direction,
+																test=samesign_or_zero(direction),
+																max_move=min(5,abs(self.coarse_inc*10)))
+		print(f'Moved by {moved} to get zero force')
+		return moved
 
 
 	def zero_z_axis(self, direction:Direction=DOWN, backoff=True) -> None:
@@ -301,6 +319,7 @@ class FDMeter:
 		back off and do it again with `self.fine_inc`."""
 		rel_z = 0.0
 
+		print('Zero z: move to zero')
 		self.move_to_zero()
 
 		if force := self.get_force():
@@ -315,7 +334,9 @@ class FDMeter:
 
 		#Back off until force is 0
 		print(f'Coarse backoff {direction.flip()} by {self.coarse_inc} until f == 0 (now {self.get_force()})')
-		self.move_z_until(inc=self.coarse_inc, direction=direction.flip(), test=oppsign_or_zero(direction.flip()))
+		# self.move_z_until(inc=self.coarse_inc, direction=direction.flip(), test=oppsign_or_zero(direction.flip()))
+		# if self.get_force != 0:
+		self.move_to_zero(inc=self.coarse_inc)
 
 		#Drop with fine movement until we get a stop
 		print(f'Fine move {direction} by {self.fine_inc} until f != 0 (now {self.get_force()})')
@@ -327,18 +348,21 @@ class FDMeter:
 		#Finally back off again until we get zero force
 		if backoff:
 			print(f'Fine backoff {direction.flip()} by {self.fine_inc} until f == 0 (now {self.get_force()})')
-			self.move_z_until(inc=self.fine_inc, direction=direction.flip(), test=zero)
+			self.move_to_zero(inc=self.fine_inc)
+			# self.move_z_until(inc=self.fine_inc, direction=direction.flip(), test=zero)
 
 		print(f"Zeroed Z axis, backed off to {self.z}, force = {self.get_force()}")
 
 
 
-	def test_loop(self, z_inc, repetitions, start_direction:Direction, test_no=1, smooth=False, **kwargs) -> list[TestResult]:
+	def test_loop(self, z_inc, repetitions, start_direction:Direction, test_no=1, smooth=False,
+							 max_down=0.0, max_up=0.0, stop_after=30, **kwargs) -> list[TestResult]:
 		"""Conduct `repetitions` cycles of testing. Start in `start_direction`;
 		move by `z_inc`; after snap-through, reverse. Set `smooth` to True to use
 		`smooth_move_test()` (`z_inc` will then be the total displacement).
-		`kwargs` are passed to `careful_move_test()` or `smooth_move_test()`.
-		Return a CSV-formatted string.  """
+		`kwargs` are passed to `careful_move_test()` or `smooth_move_test()`.  If
+		`down_max` is given then `up_max` must also be; in this case, don't detect
+		snap-through, just move up and down.  Return a CSV-formatted string.  """
 		data: list[TestResult] = []
 		direction = start_direction
 		kwargs.pop('return_to_zero', None)
@@ -346,10 +370,23 @@ class FDMeter:
 		test = partial(self.smooth_move_test if smooth else self.careful_move_test,
 									 z_inc, return_to_zero=False, **kwargs)
 
+		if max_down != max_up and 0 in (max_down, max_up):
+			raise ValueError(f"Both max_down and max_up must be specifed (given: {max_down}, {max_up}")
+
+		max_displacement = stop_after
 		for rep in range(test_no, repetitions+1):
-			data.extend(test(direction=direction, test_no=rep))
+			if max_down: max_displacement = max_down
+			data.extend(test(direction=direction, test_no=rep,
+										min_displacement=max_displacement*.5,
+										stop_after=max_displacement))
+			# if max_down == 0:
+			# 	if rep == test_no:
+			# 		max_displacement = abs(data[-1].displacement + 2)
 			direction = direction.flip()
-			data.extend(test(direction=direction, test_no=rep))
+			if max_up: max_displacement = max_up
+			data.extend(test(direction=direction, test_no=rep,
+										min_displacement=max_displacement*.5,
+										stop_after=max_displacement))
 			direction = direction.flip()
 
 		return data
@@ -358,11 +395,15 @@ class FDMeter:
 
 	def careful_move_test(self, z_inc, direction:Direction, n_samples=1,
 											 test_no=-1, return_to_zero=True, stop_after=100,
+											 min_displacement=0,
 											 **kwargs) -> list[TestResult]:
 		"""Conduct a moving force test. Move the meter until the force goes
 		non-zero (touching), then move until it reads zero (snap-through) or the
-		meter has been dropped more than `stop_after` mm."""
+		meter has been moved more than `stop_after` mm."""
 		print(f'Carefully testing moving {direction} by {z_inc}mm')
+
+		if abs(min_displacement) > abs(stop_after):
+			raise ValueError(f"{abs(min_displacement)=} must be <= {abs(stop_after)=}")
 
 		if (f := self.get_force()) != 0:
 			print(f"Force isn't 0, it's {f}")
@@ -395,12 +436,16 @@ class FDMeter:
 		print(f'\nForce: {self.get_force()} -> START MOVE TEST stepping by {z_inc} ({direction}) -----')
 
 		#Move in the test direction until the force is zero or the opposite
-		# direction from the test direction
-		f = move_one(z_inc, direction)
+		# direction from the test direction. Ensure we move at least
+		# min_displacement.
+		print(f"Move until at least min of {min_displacement}")
+		while abs(displacement) < abs(min_displacement):
+			f = move_one(z_inc, direction)
+		print(f"Move until force == 0 or opposite of {direction}, but to max of {stop_after}")
 		while (f != 0 or samedir(direction, f)) and abs(displacement) < stop_after:
 			f = move_one(z_inc, direction)
 
-		print(f'Force: {f}; Gate triggered, moving until force is 0')
+		print(f'Force: {f}; Gate triggered or max displacement {stop_after}, moving until force is 0')
 
 		#If force isn't zero, move till it is
 		if f != 0:

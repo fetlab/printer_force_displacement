@@ -1,0 +1,3361 @@
+{
+  "test_params": {
+    "feedrate": 300,
+    "test_type": "smooth",
+    "test_direction": "DOWN",
+    "test_loops": 5,
+    "test_num": 1,
+    "return_to_zero_after_test": true,
+    "smooth_displacement": -10.25
+  },
+  "test_results": [
+    {
+      "timestamp": 1724845591.8547719,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": 0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845592.182841,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -0.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845592.398051,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -0.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845592.616338,
+      "direction": "DOWN",
+      "force": -0.018,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -0.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845592.836499,
+      "direction": "DOWN",
+      "force": -0.041,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -1.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845593.052651,
+      "direction": "DOWN",
+      "force": -0.055,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -1.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845593.270011,
+      "direction": "DOWN",
+      "force": -0.065,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -1.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845593.486946,
+      "direction": "DOWN",
+      "force": -0.07,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -1.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845593.704014,
+      "direction": "DOWN",
+      "force": -0.082,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -2.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845593.9286232,
+      "direction": "DOWN",
+      "force": -0.091,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -2.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845594.1598778,
+      "direction": "DOWN",
+      "force": -0.098,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -2.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845594.37782,
+      "direction": "DOWN",
+      "force": -0.103,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -2.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845594.5940711,
+      "direction": "DOWN",
+      "force": -0.108,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -3.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845594.811286,
+      "direction": "DOWN",
+      "force": -0.112,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -3.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845595.0288808,
+      "direction": "DOWN",
+      "force": -0.116,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -3.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845595.246918,
+      "direction": "DOWN",
+      "force": -0.119,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -3.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845595.463808,
+      "direction": "DOWN",
+      "force": -0.122,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -4.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845595.6800692,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -4.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845595.897274,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -4.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845596.113683,
+      "direction": "DOWN",
+      "force": -0.128,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -4.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845596.330869,
+      "direction": "DOWN",
+      "force": -0.13,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -5.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845596.548888,
+      "direction": "DOWN",
+      "force": -0.13,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -5.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845596.7650518,
+      "direction": "DOWN",
+      "force": -0.131,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -5.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845596.983556,
+      "direction": "DOWN",
+      "force": -0.129,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -5.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845597.202869,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -6.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845597.422026,
+      "direction": "DOWN",
+      "force": -0.127,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -6.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845597.6390269,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -6.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845597.856501,
+      "direction": "DOWN",
+      "force": -0.119,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -6.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845598.073641,
+      "direction": "DOWN",
+      "force": -0.114,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -7.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845598.2918909,
+      "direction": "DOWN",
+      "force": -0.108,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -7.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845598.510059,
+      "direction": "DOWN",
+      "force": -0.104,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -7.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845598.724993,
+      "direction": "DOWN",
+      "force": -0.098,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -7.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845598.941204,
+      "direction": "DOWN",
+      "force": -0.094,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -8.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845599.155571,
+      "direction": "DOWN",
+      "force": -0.091,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -8.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845599.371943,
+      "direction": "DOWN",
+      "force": -0.088,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -8.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845599.590181,
+      "direction": "DOWN",
+      "force": -0.081,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -8.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845599.807144,
+      "direction": "DOWN",
+      "force": -0.012,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -9.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845600.023444,
+      "direction": "DOWN",
+      "force": 0.034,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -9.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845600.238806,
+      "direction": "DOWN",
+      "force": 0.026,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -9.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845600.4558542,
+      "direction": "DOWN",
+      "force": 0.017,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -9.75,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845600.671823,
+      "direction": "DOWN",
+      "force": 0.008,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -10.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845600.889407,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "careful",
+      "z": Infinity,
+      "displacement": -10.25,
+      "testno": -1
+    },
+    {
+      "timestamp": 1724845607.6345851,
+      "direction": "DOWN",
+      "force": -0.018,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845607.7804182,
+      "direction": "DOWN",
+      "force": -0.027,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845607.883511,
+      "direction": "DOWN",
+      "force": -0.028,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845607.9953961,
+      "direction": "DOWN",
+      "force": -0.042,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.078742,
+      "direction": "DOWN",
+      "force": -0.058,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.1749172,
+      "direction": "DOWN",
+      "force": -0.071,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.2867892,
+      "direction": "DOWN",
+      "force": -0.082,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.3828192,
+      "direction": "DOWN",
+      "force": -0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.485007,
+      "direction": "DOWN",
+      "force": -0.099,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.574705,
+      "direction": "DOWN",
+      "force": -0.106,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.6867359,
+      "direction": "DOWN",
+      "force": -0.112,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.7891672,
+      "direction": "DOWN",
+      "force": -0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.8787782,
+      "direction": "DOWN",
+      "force": -0.121,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845608.974713,
+      "direction": "DOWN",
+      "force": -0.123,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.093784,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.1783,
+      "direction": "DOWN",
+      "force": -0.127,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.275363,
+      "direction": "DOWN",
+      "force": -0.127,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.3747551,
+      "direction": "DOWN",
+      "force": -0.125,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.486809,
+      "direction": "DOWN",
+      "force": -0.123,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.582897,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.6787992,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.780441,
+      "direction": "DOWN",
+      "force": -0.12,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.876801,
+      "direction": "DOWN",
+      "force": -0.112,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845609.987775,
+      "direction": "DOWN",
+      "force": -0.104,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845610.077302,
+      "direction": "DOWN",
+      "force": -0.099,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845610.173781,
+      "direction": "DOWN",
+      "force": -0.096,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845610.2857962,
+      "direction": "DOWN",
+      "force": -0.092,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845610.3775601,
+      "direction": "DOWN",
+      "force": -0.087,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845610.47773,
+      "direction": "DOWN",
+      "force": -0.083,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845610.585351,
+      "direction": "DOWN",
+      "force": -0.072,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845610.681268,
+      "direction": "DOWN",
+      "force": 0.034,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845611.175662,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "smooth",
+      "z": -10.25,
+      "displacement": -10.25,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.18857,
+      "direction": "UP",
+      "force": 0.014,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.386912,
+      "direction": "UP",
+      "force": 0.018,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.482877,
+      "direction": "UP",
+      "force": 0.019,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.578868,
+      "direction": "UP",
+      "force": 0.033,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.687472,
+      "direction": "UP",
+      "force": 0.05,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.7871082,
+      "direction": "UP",
+      "force": 0.061,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.8829231,
+      "direction": "UP",
+      "force": 0.07,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845615.978934,
+      "direction": "UP",
+      "force": 0.078,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.081275,
+      "direction": "UP",
+      "force": 0.088,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.186804,
+      "direction": "UP",
+      "force": 0.098,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.278741,
+      "direction": "UP",
+      "force": 0.103,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.385164,
+      "direction": "UP",
+      "force": 0.107,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.474453,
+      "direction": "UP",
+      "force": 0.108,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.5869389,
+      "direction": "UP",
+      "force": 0.11,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.689218,
+      "direction": "UP",
+      "force": 0.113,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.778937,
+      "direction": "UP",
+      "force": 0.116,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.875019,
+      "direction": "UP",
+      "force": 0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845616.987057,
+      "direction": "UP",
+      "force": 0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.085898,
+      "direction": "UP",
+      "force": 0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.178967,
+      "direction": "UP",
+      "force": 0.114,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.2812748,
+      "direction": "UP",
+      "force": 0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.3870358,
+      "direction": "UP",
+      "force": 0.1,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.488082,
+      "direction": "UP",
+      "force": 0.088,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.578913,
+      "direction": "UP",
+      "force": 0.08,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.675013,
+      "direction": "UP",
+      "force": 0.073,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.787033,
+      "direction": "UP",
+      "force": 0.071,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.882972,
+      "direction": "UP",
+      "force": 0.071,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845617.978933,
+      "direction": "UP",
+      "force": 0.07,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845618.0812778,
+      "direction": "UP",
+      "force": 0.073,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845618.1858728,
+      "direction": "UP",
+      "force": 0.079,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845618.282979,
+      "direction": "UP",
+      "force": 0.084,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845618.3747241,
+      "direction": "UP",
+      "force": 0.087,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845618.4750211,
+      "direction": "UP",
+      "force": -0.006,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845618.7728798,
+      "direction": "UP",
+      "force": -0.0,
+      "test_type": "smooth",
+      "z": 10.25,
+      "displacement": 10.25,
+      "testno": 1
+    },
+    {
+      "timestamp": 1724845622.0251782,
+      "direction": "DOWN",
+      "force": -0.006,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.2053251,
+      "direction": "DOWN",
+      "force": -0.015,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.273095,
+      "direction": "DOWN",
+      "force": -0.015,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.385064,
+      "direction": "DOWN",
+      "force": -0.032,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.4771829,
+      "direction": "DOWN",
+      "force": -0.05,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.5770502,
+      "direction": "DOWN",
+      "force": -0.064,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.6730628,
+      "direction": "DOWN",
+      "force": -0.076,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.7850182,
+      "direction": "DOWN",
+      "force": -0.086,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.880032,
+      "direction": "DOWN",
+      "force": -0.094,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845622.981332,
+      "direction": "DOWN",
+      "force": -0.1,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.094419,
+      "direction": "DOWN",
+      "force": -0.106,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.186943,
+      "direction": "DOWN",
+      "force": -0.11,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.287022,
+      "direction": "DOWN",
+      "force": -0.114,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.389395,
+      "direction": "DOWN",
+      "force": -0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.491536,
+      "direction": "DOWN",
+      "force": -0.12,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.574888,
+      "direction": "DOWN",
+      "force": -0.122,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.6870341,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.783084,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.8852649,
+      "direction": "DOWN",
+      "force": -0.125,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845623.9750469,
+      "direction": "DOWN",
+      "force": -0.123,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.087147,
+      "direction": "DOWN",
+      "force": -0.125,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.195043,
+      "direction": "DOWN",
+      "force": -0.125,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.297781,
+      "direction": "DOWN",
+      "force": -0.115,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.381381,
+      "direction": "DOWN",
+      "force": -0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.493397,
+      "direction": "DOWN",
+      "force": -0.103,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.579336,
+      "direction": "DOWN",
+      "force": -0.1,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.680338,
+      "direction": "DOWN",
+      "force": -0.095,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.787698,
+      "direction": "DOWN",
+      "force": -0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.887048,
+      "direction": "DOWN",
+      "force": -0.087,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845624.983177,
+      "direction": "DOWN",
+      "force": -0.082,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845625.078966,
+      "direction": "DOWN",
+      "force": 0.022,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845625.569123,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "smooth",
+      "z": -10.25,
+      "displacement": -10.25,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845628.8300831,
+      "direction": "UP",
+      "force": 0.007,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845628.9833012,
+      "direction": "UP",
+      "force": 0.014,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.079149,
+      "direction": "UP",
+      "force": 0.015,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.175263,
+      "direction": "UP",
+      "force": 0.026,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.2871418,
+      "direction": "UP",
+      "force": 0.043,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.379665,
+      "direction": "UP",
+      "force": 0.056,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.479199,
+      "direction": "UP",
+      "force": 0.066,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.571241,
+      "direction": "UP",
+      "force": 0.077,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.693505,
+      "direction": "UP",
+      "force": 0.086,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.783212,
+      "direction": "UP",
+      "force": 0.096,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.878973,
+      "direction": "UP",
+      "force": 0.102,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845629.975283,
+      "direction": "UP",
+      "force": 0.106,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.0934331,
+      "direction": "UP",
+      "force": 0.108,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.1831949,
+      "direction": "UP",
+      "force": 0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.281931,
+      "direction": "UP",
+      "force": 0.111,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.3763509,
+      "direction": "UP",
+      "force": 0.116,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.4871948,
+      "direction": "UP",
+      "force": 0.118,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.589395,
+      "direction": "UP",
+      "force": 0.119,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.6792488,
+      "direction": "UP",
+      "force": 0.118,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.775276,
+      "direction": "UP",
+      "force": 0.115,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.893433,
+      "direction": "UP",
+      "force": 0.112,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845630.983212,
+      "direction": "UP",
+      "force": 0.103,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.079246,
+      "direction": "UP",
+      "force": 0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.175263,
+      "direction": "UP",
+      "force": 0.083,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.287261,
+      "direction": "UP",
+      "force": 0.078,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.385996,
+      "direction": "UP",
+      "force": 0.074,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.498122,
+      "direction": "UP",
+      "force": 0.074,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.5870469,
+      "direction": "UP",
+      "force": 0.074,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.687225,
+      "direction": "UP",
+      "force": 0.079,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.783162,
+      "direction": "UP",
+      "force": 0.086,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.879274,
+      "direction": "UP",
+      "force": 0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845631.975369,
+      "direction": "UP",
+      "force": 0.094,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845632.087213,
+      "direction": "UP",
+      "force": 0.0,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845632.369236,
+      "direction": "UP",
+      "force": -0.0,
+      "test_type": "smooth",
+      "z": 10.25,
+      "displacement": 10.25,
+      "testno": 2
+    },
+    {
+      "timestamp": 1724845635.6429482,
+      "direction": "DOWN",
+      "force": -0.011,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845635.783284,
+      "direction": "DOWN",
+      "force": -0.021,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845635.885647,
+      "direction": "DOWN",
+      "force": -0.022,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845635.9754062,
+      "direction": "DOWN",
+      "force": -0.036,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.093554,
+      "direction": "DOWN",
+      "force": -0.055,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.183351,
+      "direction": "DOWN",
+      "force": -0.068,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.279387,
+      "direction": "DOWN",
+      "force": -0.079,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.375319,
+      "direction": "DOWN",
+      "force": -0.081,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.4873102,
+      "direction": "DOWN",
+      "force": -0.092,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.585191,
+      "direction": "DOWN",
+      "force": -0.101,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.679345,
+      "direction": "DOWN",
+      "force": -0.108,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.77532,
+      "direction": "DOWN",
+      "force": -0.114,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.8872929,
+      "direction": "DOWN",
+      "force": -0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845636.989714,
+      "direction": "DOWN",
+      "force": -0.12,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.07937,
+      "direction": "DOWN",
+      "force": -0.123,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.175484,
+      "direction": "DOWN",
+      "force": -0.125,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.293257,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.383393,
+      "direction": "DOWN",
+      "force": -0.127,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.4947672,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.5840142,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.675458,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.787344,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.883372,
+      "direction": "DOWN",
+      "force": -0.116,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845637.979476,
+      "direction": "DOWN",
+      "force": -0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845638.075416,
+      "direction": "DOWN",
+      "force": -0.102,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845638.187447,
+      "direction": "DOWN",
+      "force": -0.099,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845638.2929752,
+      "direction": "DOWN",
+      "force": -0.095,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845638.372989,
+      "direction": "DOWN",
+      "force": -0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845638.471349,
+      "direction": "DOWN",
+      "force": -0.087,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845638.5802538,
+      "direction": "DOWN",
+      "force": -0.083,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845638.679778,
+      "direction": "DOWN",
+      "force": 0.011,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845639.170293,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "smooth",
+      "z": -10.25,
+      "displacement": -10.25,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845642.420036,
+      "direction": "UP",
+      "force": 0.008,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845642.5873652,
+      "direction": "UP",
+      "force": 0.014,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845642.6784708,
+      "direction": "UP",
+      "force": 0.014,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845642.780632,
+      "direction": "UP",
+      "force": 0.023,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845642.886443,
+      "direction": "UP",
+      "force": 0.041,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845642.99663,
+      "direction": "UP",
+      "force": 0.054,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.075209,
+      "direction": "UP",
+      "force": 0.064,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.1882071,
+      "direction": "UP",
+      "force": 0.075,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.283077,
+      "direction": "UP",
+      "force": 0.084,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.3888252,
+      "direction": "UP",
+      "force": 0.095,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.495181,
+      "direction": "UP",
+      "force": 0.101,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.574527,
+      "direction": "UP",
+      "force": 0.105,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.68642,
+      "direction": "UP",
+      "force": 0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.782484,
+      "direction": "UP",
+      "force": 0.112,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.878468,
+      "direction": "UP",
+      "force": 0.113,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845643.980808,
+      "direction": "UP",
+      "force": 0.115,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.081805,
+      "direction": "UP",
+      "force": 0.119,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.182571,
+      "direction": "UP",
+      "force": 0.12,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.280166,
+      "direction": "UP",
+      "force": 0.119,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.380846,
+      "direction": "UP",
+      "force": 0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.492696,
+      "direction": "UP",
+      "force": 0.113,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.601443,
+      "direction": "UP",
+      "force": 0.106,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.6785312,
+      "direction": "UP",
+      "force": 0.094,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.783637,
+      "direction": "UP",
+      "force": 0.087,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.886529,
+      "direction": "UP",
+      "force": 0.081,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845644.9827,
+      "direction": "UP",
+      "force": 0.077,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.0785291,
+      "direction": "UP",
+      "force": 0.077,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.171115,
+      "direction": "UP",
+      "force": 0.077,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.286477,
+      "direction": "UP",
+      "force": 0.078,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.382556,
+      "direction": "UP",
+      "force": 0.085,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.478549,
+      "direction": "UP",
+      "force": 0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.574107,
+      "direction": "UP",
+      "force": 0.083,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.686486,
+      "direction": "UP",
+      "force": -0.021,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845645.968378,
+      "direction": "UP",
+      "force": -0.0,
+      "test_type": "smooth",
+      "z": 10.25,
+      "displacement": 10.25,
+      "testno": 3
+    },
+    {
+      "timestamp": 1724845649.403829,
+      "direction": "DOWN",
+      "force": -0.019,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845649.573948,
+      "direction": "DOWN",
+      "force": -0.026,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845649.68667,
+      "direction": "DOWN",
+      "force": -0.026,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845649.782613,
+      "direction": "DOWN",
+      "force": -0.041,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845649.878573,
+      "direction": "DOWN",
+      "force": -0.057,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845649.974634,
+      "direction": "DOWN",
+      "force": -0.069,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.086684,
+      "direction": "DOWN",
+      "force": -0.08,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.183829,
+      "direction": "DOWN",
+      "force": -0.089,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.284914,
+      "direction": "DOWN",
+      "force": -0.097,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.380964,
+      "direction": "DOWN",
+      "force": -0.105,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.4928708,
+      "direction": "DOWN",
+      "force": -0.11,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.588944,
+      "direction": "DOWN",
+      "force": -0.115,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.6849458,
+      "direction": "DOWN",
+      "force": -0.118,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.783869,
+      "direction": "DOWN",
+      "force": -0.121,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.886615,
+      "direction": "DOWN",
+      "force": -0.123,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845650.982531,
+      "direction": "DOWN",
+      "force": -0.125,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.07859,
+      "direction": "DOWN",
+      "force": -0.126,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.174689,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.289689,
+      "direction": "DOWN",
+      "force": -0.122,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.382695,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.478677,
+      "direction": "DOWN",
+      "force": -0.125,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.58723,
+      "direction": "DOWN",
+      "force": -0.119,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.695841,
+      "direction": "DOWN",
+      "force": -0.111,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.782696,
+      "direction": "DOWN",
+      "force": -0.104,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.8786502,
+      "direction": "DOWN",
+      "force": -0.099,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845651.974717,
+      "direction": "DOWN",
+      "force": -0.097,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845652.086585,
+      "direction": "DOWN",
+      "force": -0.092,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845652.182604,
+      "direction": "DOWN",
+      "force": -0.088,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845652.275157,
+      "direction": "DOWN",
+      "force": -0.084,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845652.374655,
+      "direction": "DOWN",
+      "force": -0.028,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845652.4867682,
+      "direction": "DOWN",
+      "force": 0.035,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845652.9779782,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "smooth",
+      "z": -10.25,
+      "displacement": -10.25,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845656.304831,
+      "direction": "UP",
+      "force": 0.009,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845656.486837,
+      "direction": "UP",
+      "force": 0.014,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845656.582703,
+      "direction": "UP",
+      "force": 0.014,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845656.678774,
+      "direction": "UP",
+      "force": 0.027,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845656.7849898,
+      "direction": "UP",
+      "force": 0.044,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845656.874717,
+      "direction": "UP",
+      "force": 0.056,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845656.986811,
+      "direction": "UP",
+      "force": 0.066,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.084717,
+      "direction": "UP",
+      "force": 0.076,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.1807518,
+      "direction": "UP",
+      "force": 0.087,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.282485,
+      "direction": "UP",
+      "force": 0.097,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.37902,
+      "direction": "UP",
+      "force": 0.102,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.4847438,
+      "direction": "UP",
+      "force": 0.106,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.580721,
+      "direction": "UP",
+      "force": 0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.6767411,
+      "direction": "UP",
+      "force": 0.112,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.7856362,
+      "direction": "UP",
+      "force": 0.113,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.884672,
+      "direction": "UP",
+      "force": 0.116,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845657.9773178,
+      "direction": "UP",
+      "force": 0.119,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.076759,
+      "direction": "UP",
+      "force": 0.119,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.1729019,
+      "direction": "UP",
+      "force": 0.118,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.284771,
+      "direction": "UP",
+      "force": 0.116,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.3806899,
+      "direction": "UP",
+      "force": 0.112,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.4768798,
+      "direction": "UP",
+      "force": 0.103,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.5854201,
+      "direction": "UP",
+      "force": 0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.6910698,
+      "direction": "UP",
+      "force": 0.084,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.7807202,
+      "direction": "UP",
+      "force": 0.079,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.87687,
+      "direction": "UP",
+      "force": 0.077,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845658.97569,
+      "direction": "UP",
+      "force": 0.077,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845659.084714,
+      "direction": "UP",
+      "force": 0.076,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845659.177417,
+      "direction": "UP",
+      "force": 0.079,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845659.283158,
+      "direction": "UP",
+      "force": 0.086,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845659.39584,
+      "direction": "UP",
+      "force": 0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845659.4889972,
+      "direction": "UP",
+      "force": 0.063,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845659.578807,
+      "direction": "UP",
+      "force": -0.018,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845659.876514,
+      "direction": "UP",
+      "force": -0.0,
+      "test_type": "smooth",
+      "z": 10.25,
+      "displacement": 10.25,
+      "testno": 4
+    },
+    {
+      "timestamp": 1724845663.189257,
+      "direction": "DOWN",
+      "force": -0.019,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845663.387876,
+      "direction": "DOWN",
+      "force": -0.023,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845663.480834,
+      "direction": "DOWN",
+      "force": -0.024,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845663.57679,
+      "direction": "DOWN",
+      "force": -0.04,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845663.682831,
+      "direction": "DOWN",
+      "force": -0.056,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845663.791428,
+      "direction": "DOWN",
+      "force": -0.068,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845663.8750021,
+      "direction": "DOWN",
+      "force": -0.08,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845663.983571,
+      "direction": "DOWN",
+      "force": -0.089,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.092004,
+      "direction": "DOWN",
+      "force": -0.096,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.1788712,
+      "direction": "DOWN",
+      "force": -0.103,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.2750158,
+      "direction": "DOWN",
+      "force": -0.107,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.395964,
+      "direction": "DOWN",
+      "force": -0.111,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.4828942,
+      "direction": "DOWN",
+      "force": -0.115,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.578835,
+      "direction": "DOWN",
+      "force": -0.118,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.6749718,
+      "direction": "DOWN",
+      "force": -0.12,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.786922,
+      "direction": "DOWN",
+      "force": -0.122,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.882901,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845664.99774,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.0812259,
+      "direction": "DOWN",
+      "force": -0.121,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.186857,
+      "direction": "DOWN",
+      "force": -0.122,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.282706,
+      "direction": "DOWN",
+      "force": -0.124,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.3789299,
+      "direction": "DOWN",
+      "force": -0.12,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.475005,
+      "direction": "DOWN",
+      "force": -0.11,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.58687,
+      "direction": "DOWN",
+      "force": -0.105,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.6828952,
+      "direction": "DOWN",
+      "force": -0.101,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.777756,
+      "direction": "DOWN",
+      "force": -0.098,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.88098,
+      "direction": "DOWN",
+      "force": -0.093,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845665.983486,
+      "direction": "DOWN",
+      "force": -0.089,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845666.089209,
+      "direction": "DOWN",
+      "force": -0.085,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845666.185172,
+      "direction": "DOWN",
+      "force": -0.037,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845666.28128,
+      "direction": "DOWN",
+      "force": 0.036,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845666.78067,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "smooth",
+      "z": -10.25,
+      "displacement": -10.25,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845670.782515,
+      "direction": "UP",
+      "force": 0.008,
+      "test_type": "smooth",
+      "z": 0,
+      "displacement": 0,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845670.985294,
+      "direction": "UP",
+      "force": 0.012,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.0906172,
+      "direction": "UP",
+      "force": 0.012,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.1870341,
+      "direction": "UP",
+      "force": 0.026,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.279493,
+      "direction": "UP",
+      "force": 0.044,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.379245,
+      "direction": "UP",
+      "force": 0.057,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.480684,
+      "direction": "UP",
+      "force": 0.068,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.5869708,
+      "direction": "UP",
+      "force": 0.078,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.700327,
+      "direction": "UP",
+      "force": 0.088,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.794543,
+      "direction": "UP",
+      "force": 0.096,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.8939068,
+      "direction": "UP",
+      "force": 0.103,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845671.993268,
+      "direction": "UP",
+      "force": 0.107,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.092273,
+      "direction": "UP",
+      "force": 0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.1924999,
+      "direction": "UP",
+      "force": 0.109,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.287642,
+      "direction": "UP",
+      "force": 0.112,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.374058,
+      "direction": "UP",
+      "force": 0.116,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.4878762,
+      "direction": "UP",
+      "force": 0.119,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.5884218,
+      "direction": "UP",
+      "force": 0.121,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.674746,
+      "direction": "UP",
+      "force": 0.12,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.779207,
+      "direction": "UP",
+      "force": 0.117,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.888784,
+      "direction": "UP",
+      "force": 0.113,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845672.978813,
+      "direction": "UP",
+      "force": 0.103,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.0728261,
+      "direction": "UP",
+      "force": 0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.172982,
+      "direction": "UP",
+      "force": 0.083,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.286232,
+      "direction": "UP",
+      "force": 0.078,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.394609,
+      "direction": "UP",
+      "force": 0.075,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.478135,
+      "direction": "UP",
+      "force": 0.075,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.5740669,
+      "direction": "UP",
+      "force": 0.074,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.691156,
+      "direction": "UP",
+      "force": 0.079,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.782083,
+      "direction": "UP",
+      "force": 0.086,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.8845599,
+      "direction": "UP",
+      "force": 0.091,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845673.969919,
+      "direction": "UP",
+      "force": 0.078,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845674.09159,
+      "direction": "UP",
+      "force": -0.023,
+      "test_type": "smooth",
+      "z": Infinity,
+      "displacement": Infinity,
+      "testno": 5
+    },
+    {
+      "timestamp": 1724845674.3682308,
+      "direction": "UP",
+      "force": -0.0,
+      "test_type": "smooth",
+      "z": 10.25,
+      "displacement": 10.25,
+      "testno": 5
+    }
+  ]
+}

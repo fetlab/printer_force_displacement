@@ -6,11 +6,12 @@ class Direction(Enum):
 	UP    = 'UP'
 	STILL = 'STILL'
 
-	def flip(self):
+	def flip(self) -> 'Direction':
 		match self.value:
-			case 'DOWN':  return self.__class__('UP')
-			case 'UP':    return self.__class__('DOWN')
-			case 'STILL': return self.__class__('STILL')
+			case 'DOWN':  val = 'UP'
+			case 'UP':    val = 'DOWN'
+			case 'STILL': val = 'STILL'
+		return self.__class__(val)
 
 	def __str__(self):
 		return self.value
