@@ -1,0 +1,186 @@
+{
+  "test_params": {
+    "feedrate": 300,
+    "test_type": "careful",
+    "test_direction": "DOWN",
+    "test_loops": 0,
+    "test_num": 1,
+    "return_to_zero_after_test": true,
+    "n_samples": 1,
+    "careful_inc": 0.5,
+    "stop_after": 20
+  },
+  "test_results": [
+    {
+      "timestamp": 1726141464.9225678,
+      "direction": "DOWN",
+      "force": -0.003,
+      "test_type": "careful",
+      "z": 0.0,
+      "displacement": 0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141465.330991,
+      "direction": "DOWN",
+      "force": -0.072,
+      "test_type": "careful",
+      "z": -0.5,
+      "displacement": -0.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141465.631625,
+      "direction": "DOWN",
+      "force": -0.234,
+      "test_type": "careful",
+      "z": -1.0,
+      "displacement": -1.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141465.932422,
+      "direction": "DOWN",
+      "force": -0.362,
+      "test_type": "careful",
+      "z": -1.5,
+      "displacement": -1.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141466.2338219,
+      "direction": "DOWN",
+      "force": -0.58,
+      "test_type": "careful",
+      "z": -2.0,
+      "displacement": -2.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141466.535918,
+      "direction": "DOWN",
+      "force": -0.789,
+      "test_type": "careful",
+      "z": -2.5,
+      "displacement": -2.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141466.83763,
+      "direction": "DOWN",
+      "force": -0.989,
+      "test_type": "careful",
+      "z": -3.0,
+      "displacement": -3.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141467.138228,
+      "direction": "DOWN",
+      "force": -1.193,
+      "test_type": "careful",
+      "z": -3.5,
+      "displacement": -3.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141467.4369678,
+      "direction": "DOWN",
+      "force": -1.385,
+      "test_type": "careful",
+      "z": -4.0,
+      "displacement": -4.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141467.738812,
+      "direction": "DOWN",
+      "force": -1.54,
+      "test_type": "careful",
+      "z": -4.5,
+      "displacement": -4.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141468.040627,
+      "direction": "DOWN",
+      "force": -1.624,
+      "test_type": "careful",
+      "z": -5.0,
+      "displacement": -5.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141468.343061,
+      "direction": "DOWN",
+      "force": -1.681,
+      "test_type": "careful",
+      "z": -5.5,
+      "displacement": -5.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141468.6476731,
+      "direction": "DOWN",
+      "force": -1.711,
+      "test_type": "careful",
+      "z": -6.0,
+      "displacement": -6.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141468.948818,
+      "direction": "DOWN",
+      "force": -1.663,
+      "test_type": "careful",
+      "z": -6.5,
+      "displacement": -6.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141469.2503412,
+      "direction": "DOWN",
+      "force": -1.567,
+      "test_type": "careful",
+      "z": -7.0,
+      "displacement": -7.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141469.5496151,
+      "direction": "DOWN",
+      "force": -1.425,
+      "test_type": "careful",
+      "z": -7.5,
+      "displacement": -7.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141469.85745,
+      "direction": "DOWN",
+      "force": -1.285,
+      "test_type": "careful",
+      "z": -8.0,
+      "displacement": -8.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141470.1565492,
+      "direction": "DOWN",
+      "force": -1.12,
+      "test_type": "careful",
+      "z": -8.5,
+      "displacement": -8.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726141470.4639301,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "careful",
+      "z": -9.0,
+      "displacement": -9.0,
+      "testno": -1
+    }
+  ]
+}
