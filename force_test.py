@@ -30,6 +30,7 @@ def main(force_gauge_port, printer_port, *,
 			n_samples=1,
 			careful_inc=.25,
 			stop_after=15,
+			min_down=0,
 			max_down=0,
 			max_up=0,
 
@@ -79,6 +80,8 @@ def main(force_gauge_port, printer_port, *,
 	:param n_samples: Average this many samples per increment.
 	:param careful_inc: Step this many mm per measurement.
 	:param stop_after: Stop moving after this many mm if no snap-through has happened.
+	:param min_down: Move at least this much before trying to auto-detect
+		snap-through.
 	:param max_down: Don't automate movment, just move down this much. Also
 		specify max_up.
 	:param upg_max: Don't automate movment, just move up this much. Also
@@ -166,6 +169,7 @@ def main(force_gauge_port, printer_port, *,
 																		 test_direction,
 																		 n_samples=n_samples,
 																		 return_to_zero=return_to_zero_after_test,
+																		 min_displacement=min_down,
 																		 stop_after=stop_after)
 			smooth_displacement = data[-1].displacement
 			print(f'Careful test found displacment {smooth_displacement}')
