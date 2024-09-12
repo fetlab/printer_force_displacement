@@ -265,6 +265,9 @@ def load_results(filenames:Iterable[Path]=[],
 	if modelinfo.exists():
 		models = modelinfo2df(modelinfo)
 		for name in params:
+			if not name in models:
+				print(f'Missing model info for {name}, not loading')
+				continue
 			mname = name.split('-')[0]
 			params[name] = pd.concat([params[name], models.loc[mname]], keys=['test', 'model'])
 
