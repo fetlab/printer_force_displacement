@@ -1,0 +1,267 @@
+{
+  "test_params": {
+    "feedrate": 300,
+    "test_type": "careful",
+    "test_direction": "DOWN",
+    "test_loops": 0,
+    "test_num": 1,
+    "return_to_zero_after_test": true,
+    "n_samples": 1,
+    "careful_inc": 0.5,
+    "stop_after": 16
+  },
+  "test_results": [
+    {
+      "timestamp": 1726158045.873218,
+      "direction": "DOWN",
+      "force": -0.076,
+      "test_type": "careful",
+      "z": 2.7755575615628914e-17,
+      "displacement": 0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158046.27845,
+      "direction": "DOWN",
+      "force": -0.158,
+      "test_type": "careful",
+      "z": -0.5,
+      "displacement": -0.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158046.578509,
+      "direction": "DOWN",
+      "force": -0.29,
+      "test_type": "careful",
+      "z": -1.0,
+      "displacement": -1.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158046.879092,
+      "direction": "DOWN",
+      "force": -0.444,
+      "test_type": "careful",
+      "z": -1.5,
+      "displacement": -1.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158047.179301,
+      "direction": "DOWN",
+      "force": -0.604,
+      "test_type": "careful",
+      "z": -2.0,
+      "displacement": -2.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158047.486928,
+      "direction": "DOWN",
+      "force": -0.769,
+      "test_type": "careful",
+      "z": -2.5,
+      "displacement": -2.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158047.7902899,
+      "direction": "DOWN",
+      "force": -0.912,
+      "test_type": "careful",
+      "z": -3.0,
+      "displacement": -3.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158048.090903,
+      "direction": "DOWN",
+      "force": -1.053,
+      "test_type": "careful",
+      "z": -3.5,
+      "displacement": -3.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158048.389629,
+      "direction": "DOWN",
+      "force": -1.189,
+      "test_type": "careful",
+      "z": -4.0,
+      "displacement": -4.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158048.689606,
+      "direction": "DOWN",
+      "force": -1.318,
+      "test_type": "careful",
+      "z": -4.5,
+      "displacement": -4.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158048.9892118,
+      "direction": "DOWN",
+      "force": -1.431,
+      "test_type": "careful",
+      "z": -5.0,
+      "displacement": -5.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158049.289531,
+      "direction": "DOWN",
+      "force": -1.519,
+      "test_type": "careful",
+      "z": -5.5,
+      "displacement": -5.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158049.590026,
+      "direction": "DOWN",
+      "force": -1.602,
+      "test_type": "careful",
+      "z": -6.0,
+      "displacement": -6.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158049.889457,
+      "direction": "DOWN",
+      "force": -1.672,
+      "test_type": "careful",
+      "z": -6.5,
+      "displacement": -6.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158050.1909409,
+      "direction": "DOWN",
+      "force": -1.726,
+      "test_type": "careful",
+      "z": -7.0,
+      "displacement": -7.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158050.48975,
+      "direction": "DOWN",
+      "force": -1.771,
+      "test_type": "careful",
+      "z": -7.5,
+      "displacement": -7.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158050.789282,
+      "direction": "DOWN",
+      "force": -1.797,
+      "test_type": "careful",
+      "z": -8.0,
+      "displacement": -8.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158051.087939,
+      "direction": "DOWN",
+      "force": -1.811,
+      "test_type": "careful",
+      "z": -8.5,
+      "displacement": -8.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158051.391941,
+      "direction": "DOWN",
+      "force": -1.791,
+      "test_type": "careful",
+      "z": -9.0,
+      "displacement": -9.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158051.692547,
+      "direction": "DOWN",
+      "force": -1.754,
+      "test_type": "careful",
+      "z": -9.5,
+      "displacement": -9.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158051.992773,
+      "direction": "DOWN",
+      "force": -1.68,
+      "test_type": "careful",
+      "z": -10.0,
+      "displacement": -10.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158052.292156,
+      "direction": "DOWN",
+      "force": -1.582,
+      "test_type": "careful",
+      "z": -10.5,
+      "displacement": -10.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158052.5917492,
+      "direction": "DOWN",
+      "force": -1.464,
+      "test_type": "careful",
+      "z": -11.0,
+      "displacement": -11.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158052.8919098,
+      "direction": "DOWN",
+      "force": -1.327,
+      "test_type": "careful",
+      "z": -11.5,
+      "displacement": -11.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158053.1923258,
+      "direction": "DOWN",
+      "force": -1.191,
+      "test_type": "careful",
+      "z": -12.0,
+      "displacement": -12.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158053.492807,
+      "direction": "DOWN",
+      "force": -1.001,
+      "test_type": "careful",
+      "z": -12.5,
+      "displacement": -12.5,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158053.793598,
+      "direction": "DOWN",
+      "force": -0.876,
+      "test_type": "careful",
+      "z": -13.0,
+      "displacement": -13.0,
+      "testno": -1
+    },
+    {
+      "timestamp": 1726158054.094476,
+      "direction": "DOWN",
+      "force": 0.0,
+      "test_type": "careful",
+      "z": -13.5,
+      "displacement": -13.5,
+      "testno": -1
+    }
+  ]
+}

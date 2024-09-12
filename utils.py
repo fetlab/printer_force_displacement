@@ -11,7 +11,8 @@ from typing import Iterable
 
 ZERO_THRESH = 0.003
 
-MODEL_INFO_PATH = '../../../../Dropbox/Apps/Overleaf/A Tunable Bistable Mechanism/Table_model_names.tex'
+# MODEL_INFO_PATH = '../../../../Dropbox/Apps/Overleaf/A Tunable Bistable Mechanism/Table_model_names.tex'
+MODEL_INFO_PATH = '../../../../Dropbox/Apps/Overleaf/A Tunable Bistable Mechanism/Table_model_names_version 2.tex'
 
 FLIPPER_LEN = 16.7
 SHUTTLE_THICKNESS = 6
@@ -269,7 +270,7 @@ def load_results(filenames:Iterable[Path]=[],
 
 		print(f"Models defined but without tests: {', '.join(sorted(set(models.index) - set(params.keys())))}")
 
-	return pd.DataFrame(params).T, drop_stuff(data)
+	return pd.DataFrame(params).T, data#, drop_stuff(data)
 
 
 def param2modelstr(name:str, params:pd.DataFrame):
