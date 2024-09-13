@@ -209,27 +209,27 @@ def multi_sub(col:pd.Series, *subs:tuple[str,str]):
 
 
 
-def modelinfo2df(modelinfo:Path) -> dict:
+def modelinfo2df(modelinfo:Path) -> pd.DataFrame:
 	"""Translate a latex table to model info"""
-	if modelinfo.suffix == '.tex':
-		from astropy.table import Table
-		tab = Table.read(modelinfo).to_pandas()
-		for col in tab.columns:
-			tab[col] = multi_sub(tab[col],
-								 (r'\\textbf{([^}]+)}', r'\1'),
-								 (r'(?:\s*mm)', ''),
-								 ('\?', ''),
-								 ('%.*$', ''),
-								 (r'\\*', ''),
-			 )#.str.strip()
-			try:
-				tab[col] = pd.to_numeric(tab[col])
-			except ValueError:
-				pass
-		tab['Symmetric'] = tab.Symmetric.map(lambda v: v == 'checkmark')
-		tab['w_b_ratio'] = (2*FLIPPER_LEN + SHUTTLE_THICKNESS) / tab['Base Width']
-		tab['displacement_calc'] = 2 * FLIPPER_LEN * np.sin(np.radians(tab.Angle))
-		return tab.set_index('Names')
+	from astropy.table import Table
+	tab = Table.read(modelinfo).to_pandas()
+	for col in tab.columns:
+		tab[col] = multi_sub(tab[col],
+							 (r'\\textbf{([^}]+)}', r'\1'),
+							 (r'(?:\s*mm)', ''),
+							 ('\?', ''),
+							 ('%.*$', ''),
+							 (r'\\*', ''),
+							 (r'mm\(([^)]+)\)', r'/\1'),
+		 )#.str.strip()
+		try:
+			tab[col] = pd.to_numeric(tab[col])
+		except ValueError:
+			pass
+	tab['Symmetric'] = tab.Symmetric.map(lambda v: v == 'checkmark')
+	tab['w_b_ratio'] = (2*FLIPPER_LEN + SHUTTLE_THICKNESS) / tab['Base Width']
+	tab['displacement_calc'] = 2 * FLIPPER_LEN * np.sin(np.radians(tab.Angle))
+	return tab.set_index('Names')
 
 
 def load_raw_results(filenames:Iterable[Path]=[],
@@ -251,7 +251,7 @@ def load_raw_results(filenames:Iterable[Path]=[],
 
 
 def load_results(filenames:Iterable[Path]=[],
-								 modelinfo:Path=Path(MODEL_INFO_PATH),
+								 modelinfo:Path|pd.DataFrame=Path(MODEL_INFO_PATH),
 								 drop_tests=[],) -> tuple[pd.DataFrame, dict[str,pd.DataFrame]]:
 	"""Load results files, process, and return a DataFrame of test and model params (model names as columns) and a dict of {name: data}. Return only params for which there are test results."""
 	params, data = {}, {}
@@ -262,11 +262,13 @@ def load_results(filenames:Iterable[Path]=[],
 		params[file.stem] = p
 		data[file.stem] = pd.concat([proc_df(standardize(df)) for df in dfs if len(df) > 10])
 
-	if modelinfo.exists():
-		models = modelinfo2df(modelinfo)
-		for name in params:
-			if not name in models:
-				print(f'Missing model info for {name}, not loading')
+	if isinstance(modelinfo, pd.DataFrame) or modelinfo.exists():
+		models:pd.DataFrame = modelinfo2df(modelinfo) if isinstance(modelinfo, Path) else modelinfo
+		for name in list(params.keys()):
+			if not name in models.index:
+				print(f'Missing model info for "{name}", not loading')
+				if name in data: del(data[name])
+				del params[name]
 				continue
 			mname = name.split('-')[0]
 			params[name] = pd.concat([params[name], models.loc[mname]], keys=['test', 'model'])
@@ -296,9 +298,11 @@ def snsplot(data:dict[str, list[pd.DataFrame]], params:pd.DataFrame,
 		fig, ax = plt.subplots(**figargs)
 	for name in data:
 		df = data[name]
+		line_name = name.split('_')[0]
 		for direction in directions:
 			sns.lineplot(data=df[df.direction == direction], x='displacement',
-								y='force', ax=ax, label=param2modelstr(name, params), **model_lines[name], **kwargs)
+								y='force', ax=ax, label=param2modelstr(name, params),
+								**model_lines[line_name], **kwargs)
 
 	#Remove duplicate legend entries
 	if kwargs.get('legend', True):
