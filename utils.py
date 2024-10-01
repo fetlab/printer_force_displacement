@@ -302,7 +302,7 @@ def snsplot(data:dict[str, list[pd.DataFrame]], params:pd.DataFrame,
 		for direction in directions:
 			sns.lineplot(data=df[df.direction == direction], x='displacement',
 								y='force', ax=ax, label=param2modelstr(name, params),
-								**model_lines[line_name], **kwargs)
+								**model_lines.get(line_name, {}), **kwargs)
 
 	#Remove duplicate legend entries
 	if kwargs.get('legend', True):
