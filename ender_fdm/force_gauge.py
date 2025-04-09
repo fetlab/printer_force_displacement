@@ -523,7 +523,7 @@ class FDMeter:
 
 
 if __name__ == "__main__":
-	from clize import run, ArgumentError, parameters, parser
+	from clize import run, parameters, parser
 
 	@parser.value_converter
 	def arg2dir(arg):
