@@ -1,4 +1,13 @@
-from ender_fdm import FDMeter, Direction, UP, DOWN, STILL, DEFAULT_FEEDRATE, MAX_FEEDRATE, results_to_csv, results_to_json
+#!/usr/bin/env -S uv run
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "pyserial",
+#     "rich",
+#     "clize",
+# ]
+# ///
+from ender_fdm import FDMeter, Direction, UP, DOWN, STILL, DEFAULT_FEEDRATE, MAX_FEEDRATE, results_to_json
 from clize import run, ArgumentError, parameters, parser
 from pathlib import Path
 import sys
@@ -39,7 +48,7 @@ def main(force_gauge_port, printer_port, *,
 			outfile:Path='',
 
 			force_info: 'F'=0,
-			quicktest: 'Q'=False,
+			quicktest:  'Q'=False,
 			debug_gcode=False,
 		) -> None:
 	"""
