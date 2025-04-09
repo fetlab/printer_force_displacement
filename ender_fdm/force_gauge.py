@@ -431,8 +431,8 @@ class FDMeter:
 			return f
 
 		#Move until the probe is just touching the object
-		print(f'\nTEST PRE-MOVE by {z_inc} ({direction}) until force != 0')
-		self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzero)
+		print(f'\nTEST PRE-MOVE by {z_inc} ({direction}) until force != 0 (within {EPS})')
+		zero_dist = self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzeroeps)
 
 		print(f'\nForce: {self.get_force()} -> START MOVE TEST stepping by {z_inc} ({direction}) -----')
 
