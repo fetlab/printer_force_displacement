@@ -458,7 +458,8 @@ class FDMeter:
 		print(f'Force: {f} -> END MOVE TEST stepping by {z_inc} ({direction}) -----\n')
 
 		if return_to_zero:
-			self.move_z(displacement, direction.flip(), feedrate=DEFAULT_FEEDRATE)
+			self.move_z(displacement + zero_dist, direction.flip(), feedrate=DEFAULT_FEEDRATE)
+			self.move_to_zero()
 
 		return data
 
