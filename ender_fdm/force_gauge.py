@@ -13,6 +13,7 @@ import sys, csv, json
 DEFAULT_FEEDRATE = 180
 MAX_FEEDRATE = 300    #From marlin Configuration.h or issue M503
 MIN_Z_MOVE = 0.1
+EPS = .01
 
 def sign(v:int|float|Direction) -> int:
 	if isinstance(v, Direction): v = v.sign
@@ -26,11 +27,11 @@ def nonzero(v):    return v != 0
 
 def zeroeps(v):
 	"""Return True if v is 0 or very close to 0, otherwise False."""
-	return abs(v) <= .001
+	return abs(v) <= EPS
 
 def nonzeroeps(v):
 	"""Return False if v is 0 or very close to 0, otherwise True."""
-	return abs(v) > .001
+	return abs(v) > EPS
 
 #Return test functions based on comparison with x
 def oppsign(cmp):
