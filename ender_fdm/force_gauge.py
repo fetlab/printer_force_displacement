@@ -196,7 +196,7 @@ class FDMeter:
 		return sum(vals) / len(vals)
 
 
-	def stable_force(self, n_same=3, max_n=20) -> float:
+	def stable_force(self, n_same=3, max_n=40) -> float:
 		"""Get force readings until `n_same` subsequent readings are the same.
 		Raise an error after `max_n` readings."""
 		same = 0
@@ -209,7 +209,7 @@ class FDMeter:
 			else:
 				same += 1
 			if (count := count + 1) >= max_n:
-				raise ValueError('Max samples exceeded, readings never stabilized')
+				raise ValueError(f'Max samples ({max_n}) exceeded, readings never stabilized')
 		return last
 
 
