@@ -483,7 +483,6 @@ class FDMeter:
 							  force=self.get_force(),
 								testno=test_no,
 							)]
-		start_z = self.z
 
 		#Tell the printer to move through the entire length of the displacement
 		target_displacement = inc2dir(target_displacement, direction)
