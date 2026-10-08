@@ -11,7 +11,7 @@ from serial import Serial
 from serial.threaded import Protocol, ReaderThread
 from .direction import Direction, UP, DOWN, STILL, force2dir
 
-MAX_FORCE = 3.5
+MAX_FORCE = 3.5 # what unit?
 
 class ThreadedForceMeter(Protocol):
 	def __init__(self):
@@ -91,3 +91,4 @@ if __name__ == "__main__":
 		while True:
 			if m.new_value:
 				print(m.value)
+				

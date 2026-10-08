@@ -1,0 +1,42 @@
+{
+  "name": "t3",
+  "test_config": "t3",
+  "moves": [
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 10.0,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 1.0,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 1.0,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.1,
+      "direction": "UP"
+    }
+  ]
+}

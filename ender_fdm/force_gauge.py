@@ -1,19 +1,24 @@
+
 from pathlib import Path
 from serial import Serial
 from serial.threaded import ReaderThread
-from .threaded_force_meter import ThreadedForceMeter
+from .threaded_force_meter import ThreadedForceMeter, MAX_FORCE
 from .direction import Direction, UP, DOWN, inc2dir, force2dir
 from time import time
-from typing import Callable
+from typing import Callable, TYPE_CHECKING
 from rich import print
 from dataclasses import dataclass
 from functools import partial
 import sys, csv, json
+import time as _t
+import math
+import queue
+from GUI_classes.custom_msg import custom_test_msg, panic_msg
+from .constants import DEFAULT_FEEDRATE, MAX_FEEDRATE, MIN_Z_MOVE, EPS, BIG_EPS
 
-DEFAULT_FEEDRATE = 180
-MAX_FEEDRATE = 300    #From marlin Configuration.h or issue M503
-MIN_Z_MOVE = 0.1
-EPS = .01
+if TYPE_CHECKING:
+	# Import only for type hints to avoid runtime circular imports
+	from GUI_classes.DataJson import TestConfig
 
 def sign(v:int|float|Direction) -> int:
 	if isinstance(v, Direction): v = v.sign
@@ -96,8 +101,6 @@ def results_to_json(test_params:dict, test_results: list[TestResult], outfile:Pa
 			except ValueError:
 				pass
 		return results_to_json(test_params, test_results, newoutfile)
-
-	print(f"Saving to {outfile}")
 	with open(outfile, 'w') as f:
 		json.dump({'test_params': test_params, 'test_results': test_results}, f,
 						indent=2,
@@ -155,6 +158,22 @@ class FDMeter:
 			print('   Wait for force to stabilize')
 			print(f'Force now {self.stable_force()}')
 
+	def close(self):
+		# Stop the reader thread
+		if hasattr(self, 'force_thread') and self.force_thread is not None:
+			try:
+				self.force_thread.stop()  # ReaderThread has a stop method
+			except Exception as e:
+				print("Failed to stop force thread:", e)
+			self.force_thread = None
+
+		# Close the serial port
+		if hasattr(self, 'force_serial') and self.force_serial is not None:
+			try:
+				self.force_serial.close()
+			except Exception as e:
+				print("Failed to close force serial:", e)
+			self.force_serial = None
 
 	def get_force(self) -> float:
 		"""Return the next new value from the force meter, blocking until there is
@@ -224,7 +243,6 @@ class FDMeter:
 			return self.printer.read_until(b'ok\n').removesuffix(b'ok\n').strip().decode()
 		return ''
 
-
 	def move_z(self, inc:float, direction:Direction, feedrate=None, wait=True, pre='', post='') -> None:
 		"""Move the Z axis by `inc` mm"""
 		if inc == 0: return
@@ -239,6 +257,9 @@ class FDMeter:
 		#Only keep track of z location once we've zeroed z
 		if self.zeroed:
 			self.z += inc
+		else:
+			# Talk to Dan about this behavior
+			print("Z axis not zeroed, not updating z position")
 
 
 	def move_z_until(self, inc:float, direction:Direction, test=Callable[[float], bool],
@@ -307,9 +328,9 @@ class FDMeter:
 			direction = self.force.direction.flip()
 			print(f'Move to zero: force is {force} ({self.force.direction}), moving by {inc} {direction} until 0')
 			moved += self.move_z_until(inc=inc,
-																direction=direction,
-																test=samesign_or_zero(direction),
-																max_move=min(5,abs(self.coarse_inc*10)))
+					direction=direction,
+					test=samesign_or_zero(direction),
+					max_move=min(5,abs(self.coarse_inc*10)))
 		print(f'Moved by {moved} to get zero force')
 		return moved
 
@@ -353,9 +374,7 @@ class FDMeter:
 			# self.move_z_until(inc=self.fine_inc, direction=direction.flip(), test=zero)
 
 		print(f"Zeroed Z axis, backed off to {self.z}, force = {self.get_force()}")
-
-
-
+	
 	def test_loop(self, z_inc, repetitions, start_direction:Direction, test_no=1, smooth=False,
 							 max_down=0.0, max_up=0.0, stop_after=30, **kwargs) -> list[TestResult]:
 		"""Conduct `repetitions` cycles of testing. Start in `start_direction`;
@@ -368,8 +387,7 @@ class FDMeter:
 		direction = start_direction
 		kwargs.pop('return_to_zero', None)
 
-		test = partial(self.smooth_move_test if smooth else self.careful_move_test,
-									 z_inc, return_to_zero=False, **kwargs)
+		test = partial(self.smooth_move_test if smooth else self.careful_move_test, z_inc, return_to_zero=False, **kwargs)
 
 		if max_down != max_up and 0 in (max_down, max_up):
 			raise ValueError(f"Both max_down and max_up must be specifed (given: {max_down}, {max_up}")
@@ -392,61 +410,64 @@ class FDMeter:
 
 		return data
 
-
-
-	def careful_move_test(self, z_inc, direction:Direction, n_samples=1,
-											 test_no=-1, return_to_zero=True, stop_after=100,
-											 min_displacement=0,
-											 **kwargs) -> list[TestResult]:
+	def careful_move_test(self,queue, direction:Direction, cfg: 'TestConfig') -> list[TestResult]:
 		"""Conduct a moving force test. Move the meter until the force goes
 		non-zero (touching), then move until it reads zero (snap-through) or the
 		meter has been moved more than `stop_after` mm."""
-		print(f'Carefully testing moving {direction} by {z_inc}mm')
-
-		if abs(min_displacement) > abs(stop_after):
-			raise ValueError(f"{abs(min_displacement)=} must be <= {abs(stop_after)=}")
+		
+		print(f'Carefully testing moving {direction} by {cfg.careful_inc}mm')
+		if abs(cfg.min_down) > abs(cfg.stop_after):
+			raise ValueError(f"{abs(cfg.min_down)=} must be <= {abs(cfg.stop_after)=}")
 
 		if (f := self.get_force()) != 0:
 			print(f"Force isn't 0, it's {f}")
 			self.move_to_zero()
 
-		z_inc = inc2dir(z_inc, direction)
+		z_inc = inc2dir(cfg.careful_inc, direction)
 		displacement = 0
 		data: list[TestResult] = []
 
 		def move_one(z_inc, direction):
 			nonlocal displacement
 			data.append(TestResult(
-										timestamp=time(),
-										test_type='careful',
-										direction=direction,
-										z=self.z,
-										displacement=displacement,
-										force=(f := self.avg_force(n=n_samples)),
-										testno=test_no,
+									timestamp=time(),
+									test_type='careful',
+									direction=direction,
+									z=self.z,
+									displacement=displacement,
+									force=(f := self.avg_force(n=cfg.n_samples)),
+									testno=cfg.test_num,
 								))
 			print(data[-1])
+			queue.put(data[-1])
 			self.move_z(z_inc, direction)
 			displacement += z_inc
 			return f
 
 		#Move until the probe is just touching the object
-		print(f'\nTEST PRE-MOVE by {z_inc} ({direction}) until force != 0 (within {EPS})')
-		zero_dist = self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzeroeps)
+		zero_dist = 0.0
+		if cfg.do_preMove:
+			print(f'\nTEST PRE-MOVE by {z_inc} ({direction}) until force != 0 (within {EPS})')
+			zero_dist = self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzeroeps)
 
 		print(f'\nForce: {self.get_force()} -> START MOVE TEST stepping by {z_inc} ({direction}) -----')
 
 		#Move in the test direction until the force is zero or the opposite
 		# direction from the test direction. Ensure we move at least
-		# min_displacement.
-		print(f"Move until at least min of {min_displacement}")
-		while abs(displacement) < abs(min_displacement):
+		# min_down.
+		print(f"Move until at least min of {cfg.min_down}")
+		
+		while abs(displacement) < abs(cfg.min_down):
+			print("here")
 			f = move_one(z_inc, direction)
-		print(f"Move until force == 0 or opposite of {direction}, but to max of {stop_after}")
-		while (f != 0 or samedir(direction, f)) and abs(displacement) < stop_after:
-			f = move_one(z_inc, direction)
+			print("here again")
 
-		print(f'Force: {f}; Gate triggered or max displacement {stop_after}, moving until force is 0')
+		print(f"Move until force == 0 or opposite of {direction}, but to max of {cfg.stop_after}")
+		while (f != 0 or samedir(direction, f)) and abs(displacement) < cfg.stop_after:
+			print("here2")
+			f = move_one(z_inc, direction)
+			print("here2 again")
+		print(f'Force: {f}; Gate triggered or max displacement {cfg.stop_after}, moving until force is 0')
 
 		#If force isn't zero, move till it is
 		if f != 0:
@@ -457,12 +478,227 @@ class FDMeter:
 		print(f'oppdir_or_zero({direction=}, {f=}) = {oppdir_or_zero(direction, f)}')
 		print(f'Force: {f} -> END MOVE TEST stepping by {z_inc} ({direction}) -----\n')
 
-		if return_to_zero:
+		if cfg.return_to_zero_after_test:
 			self.move_z(displacement + zero_dist, direction.flip(), feedrate=DEFAULT_FEEDRATE)
 			self.move_to_zero()
 
 		return data
 
+	def push_until_test(self,queue, converted_direction, cfg: 'TestConfig') -> list[TestResult]:
+		"""Push in the given direction until the force threshold is reached."""
+		print(f'Carefully testing moving {converted_direction} by {cfg.careful_inc}mm')
+
+		# basic sanity checks
+		if abs(cfg.min_displacement) > abs(cfg.stop_after):
+			raise ValueError(f"{abs(cfg.min_displacement)=} must be <= {abs(cfg.stop_after)=}")
+
+		if (f := self.get_force()) != 0:
+			print(f"Force isn't 0, it's {f}")
+			self.move_to_zero()
+		z_inc = inc2dir(cfg.careful_inc, converted_direction)
+		displacement = 0
+		data: list[TestResult] = []
+		# Helper to move one step and log data
+		def move_one(z_inc, direction):
+			nonlocal displacement
+			data.append(TestResult(
+									timestamp=time(),
+									test_type=cfg.test_type,
+									direction=direction,
+									z=self.z,
+									displacement=displacement,
+									force=(f := self.avg_force(n=cfg.n_samples)),
+									testno=cfg.test_num,
+								))
+			print(data[-1])
+			queue.put(data[-1])
+			self.move_z(z_inc, direction)
+			displacement += inc2dir(z_inc, direction)
+			return f
+
+		#Move until the probe is just touching the object
+		zero_dist = 0.0
+		if cfg.do_preMove:
+			print(f'\nTEST PRE-MOVE by {z_inc} ({converted_direction}) until force != 0 (within {EPS})')
+			zero_dist = self.move_z_until(inc=self.fine_inc, direction=converted_direction, test=nonzeroeps)
+
+		print(f'\nForce: {self.get_force()} -> START MOVE TEST stepping by {z_inc} ({converted_direction}) -----')
+		
+		print(f"Move until force == {cfg.force_threshold}")
+		# Move in the test direction until the force threshold is reached
+		while abs(f) < abs(cfg.force_threshold) and abs(displacement) < abs(cfg.stop_after):
+    	
+			if math.isclose(abs(f), abs(cfg.force_threshold), abs_tol=0.01):
+				print(f'Exactly at target force {cfg.force_threshold}, stopping')
+				break
+			elif math.isclose(abs(f), abs(cfg.force_threshold), abs_tol=BIG_EPS):
+				print(f'  Close to target force {cfg.force_threshold}, moving slowly')
+				f = move_one(MIN_Z_MOVE, converted_direction)
+			else:
+				f = move_one(z_inc, converted_direction)
+		
+		print(f'Force: {f}; Force threshold reached or max displacement {cfg.stop_after}')
+
+		print(f'oppdir_or_zero({converted_direction=}, {f=}) = {oppdir_or_zero(converted_direction, f)}')
+		print(f'Force: {f} -> END MOVE TEST stepping by {z_inc} ({converted_direction}) -----\n')
+
+		# Hold at final position
+		_t.sleep(cfg.hold_time)
+
+		if cfg.return_to_zero_after_test:
+			self.move_z(displacement + zero_dist, converted_direction.flip(), feedrate=DEFAULT_FEEDRATE)
+			self.move_to_zero()
+
+		return data
+	
+	def push_until_dist_test(self,queue,direction:Direction, cfg: 'TestConfig') -> list[TestResult]:
+		"""Push in the given direction until a displacement is reached."""
+		print(f'Carefully testing moving {direction} by {cfg.careful_inc}mm')
+
+
+		if (f := self.get_force()) != 0:
+			print(f"Force isn't 0, it's {f}")
+			self.move_to_zero()
+
+		z_inc = inc2dir(cfg.careful_inc, direction)
+		displacement = 0
+		data: list[TestResult] = []
+
+		# Helper to move one step and log data
+		def move_one(z_inc, direction):
+			nonlocal displacement
+			data.append(TestResult(
+									timestamp=time(),
+									test_type=cfg.test_type,
+									direction=direction,
+									z=self.z,
+									displacement=displacement,
+									force=(f := self.avg_force(n=cfg.n_samples)),
+									testno=cfg.test_num,
+								))
+			print(data[-1])
+			queue.put(data[-1])
+			self.move_z(z_inc, direction)
+			displacement += inc2dir(z_inc, direction)
+			return f
+
+		#Move until the probe is just touching the object
+		zero_dist = 0.0
+		if cfg.do_preMove:
+			print(f'\nTEST PRE-MOVE by {z_inc} ({direction}) until force != 0 (within {EPS})')
+			zero_dist = self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzeroeps)
+
+		print(f'\nForce: {self.get_force()} -> START MOVE TEST stepping by {z_inc} ({direction}) -----')
+		
+		print(f"Move until displacement == {cfg.displacement_threshold}")
+		# Move in the test direction until the displacement threshold is reached
+		while abs(displacement) < abs(cfg.displacement_threshold):
+			print(f'Current displacement: {displacement}')
+			
+			if math.isclose(abs(displacement), abs(cfg.displacement_threshold), abs_tol=0.01):
+				print(f'Exactly at target displacement {cfg.displacement_threshold}, stopping')
+				break
+			
+			elif math.isclose(abs(displacement), abs(cfg.displacement_threshold), abs_tol=abs(z_inc)+0.01):
+				print(f'Close to target displacement {cfg.displacement_threshold}, moving slowly. displacement={displacement}	')
+				f = move_one(MIN_Z_MOVE, direction)
+			
+			else:
+				f = move_one(z_inc, direction)
+		
+		print(f'Force: {f} Displacement: {displacement}; Displacement threshold reached')
+
+		print(f'oppdir_or_zero({direction=}, {f=}) = {oppdir_or_zero(direction, f)}')
+		print(f'Force: {f} -> END MOVE TEST stepping by {z_inc} ({direction}) -----\n')
+		
+		# Hold at final position
+		_t.sleep(cfg.hold_time)
+
+		if cfg.return_to_zero_after_test:
+			self.move_z(displacement + zero_dist, direction.flip(), feedrate=DEFAULT_FEEDRATE)
+			self.move_to_zero()
+
+		return data
+
+	def custom_move_test(self,msg_queue,cmd_queue,direction, cfg: 'TestConfig') -> list[TestResult]:
+					  
+		"""
+		Conduct a moving force test. Move the meter based on messages received
+		on `cmd_queue`. After each move, send a TestResult message to `msg_queue`.
+		Stop the test if the force exceeds `cfg.max_force` or if a "TEST_DONE"
+		message is received on `cmd_queue`.
+		"""
+		if (f := self.get_force()) != 0:
+			print(f"Force isn't 0, it's {f}")
+			self.move_to_zero()
+
+		displacement = 0
+		data: list[TestResult] = []
+
+		zero_dist = 0.0
+		if cfg.do_preMove:
+			print(f'\nTEST PRE-MOVE by {cfg.careful_inc} ({direction}) until force != 0 (within {EPS})')
+			zero_dist = self.move_z_until(inc=self.fine_inc, direction=direction, test=nonzeroeps)
+
+		def move_one(z_inc, direction, undo = False):
+			nonlocal displacement
+			new_data =TestResult(
+									timestamp=time(),
+									test_type='custom',
+									direction=direction,
+									z=self.z,
+									displacement=displacement,
+									force=(f := self.avg_force(n=cfg.n_samples)),
+									testno=cfg.test_num,
+								)
+			if not undo:
+				data.append(new_data)
+				print(data[-1])
+				msg_queue.put(data[-1])
+			
+			self.move_z(z_inc, direction)
+			displacement += z_inc
+			return f
+
+		try:
+			while True:
+				print("Waiting for custom move message...")
+				msg = cmd_queue.get()
+				if isinstance(msg, custom_test_msg):
+					new_move = msg.z_inc
+					new_dir = Direction.arg2dir(msg.direction)
+					final_move = inc2dir(new_move, new_dir)
+					# do the move
+					f = move_one(final_move, new_dir)
+					
+					if f >= MAX_FORCE or f <= -MAX_FORCE:
+						print(f'Exceeded absolute max force {MAX_FORCE}: {f}, stopping test.')
+						break
+					
+					if f >= cfg.max_force or f <= -cfg.max_force:
+						print(f'Max force {cfg.max_force} reached: {f}, stopping test.')
+						break
+				
+				elif isinstance(msg, panic_msg):
+					if msg.reason == "UNDO":
+						print(f"Received UNDO message, moving back {msg.undo_steps} steps.")
+						new_move = msg.undo_steps.z_inc
+						new_dir = msg.undo_steps.direction
+						final_move = inc2dir(new_move, new_dir)
+						f = move_one(final_move, new_dir, undo=True)
+
+				elif msg == "TEST_DONE":
+					print("Received DONE message, exiting custom move test.")
+					break
+						
+		except queue.Empty:
+			pass
+	
+		if cfg.return_to_zero_after_test:
+			self.move_z(displacement + zero_dist, direction.flip(), feedrate=DEFAULT_FEEDRATE)
+			self.move_to_zero()
+
+		return data
 
 	def smooth_move_test(self, target_displacement:float, direction:Direction,
 											return_to_zero=False, feedrate=DEFAULT_FEEDRATE, test_no=-1,
@@ -520,130 +756,4 @@ class FDMeter:
 
 		return data
 
-
-
-if __name__ == "__main__":
-	from clize import run, parameters, parser
-
-	@parser.value_converter
-	def arg2dir(arg):
-		if isinstance(arg, Direction): return arg
-		return UP if arg.upper == 'UP' else DOWN
-
-	def main(force_gauge_port, printer_port, *,
-			 force_gauge_baud=2400, printer_baud=115200,
-			 force_gauge_timeout=1, printer_timeout=None,
-
-			 feedrate=DEFAULT_FEEDRATE,
-
-			 first_move_z_up_by=0.0,
-			 first_move_z_down_by=0.0,
-			 exit_after_first_z_move=False,
-			 do_zero=True,
-			 zero_coarse_inc=.5,
-			 zero_fine_inc=.1,
-
-			 test_type:parameters.one_of('careful', 'smooth', case_sensitive=False)='careful',
-			 test_direction:arg2dir=DOWN,
-			 test_loops=0,
-			 test_num=1,
-			 n_samples=1,
-			 careful_inc=.25,
-			 stop_after=15,
-			 return_to_zero_after_test=True,
-			 outfile:Path='',
-			 # smooth_displacement=0.0,
-
-			 debug_gcode=False,
-			) -> None:
-		"""
-		Serial connection parameters:
-
-		:param force_gauge_port: Serial port for the force gauge.
-		:param force_gauge_baud: Force gauge serial port baud rate.
-		:param printer_port: Serial port for the printer.
-		:param printer_baud: Printer serial port baud rate.
-
-
-		Motion options:
-
-		:param feedrate: Set the default feedrate for moves in mm/minute.
-
-
-		Startup move options:
-
-		:param first_move_z_up_by: Move the Z-axis up by N mm before doing anything else.
-		:param first_move_z_down_by: Move the Z-axis down by N mm before doing anything else.
-		:param exit_after_first_z_move: Exit after first_move_z_{up,down}_by.
-		:param do_zero: Zero the printer by moving down until force is nonzero.
-		:param zero_coarse_inc: Large move amount for zeroing (mm).
-		:param zero_fine_inc: Small move amount for zeroing (mm).
-
-
-		Test options:
-
-		:param test_type: Specify 'careful' or 'smooth'
-		:param test_direction: Do a movement test in this direction.
-		:param test_loops: Do repeated loops; if 0, only move a single direction then stop.
-		:param test_num: Start numbering loop tests here.
-		:param n_samples: Average this many samples per increment.
-		:param careful_inc: Step this many mm per measurement.
-		:param stop_after: Stop moving after this many mm if no snap-through has happened.
-		:param return_to_zero_after_test: Return to the zeroed point if test_loops == 0.
-		:param outfile: Write a CSV file here.
-
-
-		Other options:
-
-		:param debug_gcode: Print every Gcode command as it is issued.
-		"""
-
-		meter = FDMeter(
-				printer_port        = printer_port,
-				force_gauge_port    = None if exit_after_first_z_move else force_gauge_port,
-				printer_baud        = printer_baud,
-				force_gauge_baud    = force_gauge_baud,
-				printer_timeout     = printer_timeout,
-				force_gauge_timeout = force_gauge_timeout,
-				z_coarse_inc        = z_coarse_inc,
-				z_fine_inc          = z_fine_inc,
-		)
-		meter._debug_gcode = debug_gcode
-
-		meter.move_z(first_move_z_up_by, UP, feedrate=feedrate)
-		meter.move_z(first_move_z_down_by, DOWN, feedrate=feedrate)
-
-		if exit_after_first_z_move and max(first_move_z_up_by, first_move_z_down_by):
-			print('Moved z, exiting')
-			sys.exit(0)
-
-		z = meter.z_endstop()
-		print(f'endstop {z}')
-
-		if do_zero:
-			print('Zeroing z axis')
-			meter.zero_z_axis()
-
-		if test_direction:
-			direction = Direction(test_direction)
-			print(f'Going to do test {test_direction}')
-			if test_type == 'smooth' or test_loops <= 0:
-				data = meter.careful_move_test(careful_inc,
-																			 direction,
-																			 n_samples=n_samples,
-																			 return_to_zero=return_to_zero_after_test)
-			if test_loops > 0:
-				data = meter.test_loop(
-						careful_inc,
-						test_loops, direction,
-													 test_no=test_num,
-													 n_samples=n_samples,
-													 return_to_zero=return_to_zero_after_test)
-
-			if outfile:
-				results_to_csv(data, outfile)
-				print(f'Saved data to {outfile}')
-
-
-	run(main)
 
