@@ -18,6 +18,9 @@ class Direction(Enum):
 
 	def to_json_encodable(self):
 		return str(self)
+	def arg2dir(arg):
+		if isinstance(arg, Direction): return arg
+		return Direction(arg.upper())
 
 	@property
 	def sign(self):
@@ -41,3 +44,4 @@ def force2dir(force:float) -> Direction:
 	if force == 0: return STILL
 	if force <  0: return DOWN
 	return UP
+

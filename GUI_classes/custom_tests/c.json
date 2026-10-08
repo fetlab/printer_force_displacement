@@ -1,0 +1,34 @@
+{
+  "name": "c",
+  "test_config": "c",
+  "moves": [
+    {
+      "z_inc": 0.5,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 1.0,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 1.0,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.1,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.1,
+      "direction": "DOWN"
+    }
+  ]
+}

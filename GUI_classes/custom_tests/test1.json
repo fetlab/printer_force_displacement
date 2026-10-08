@@ -1,0 +1,26 @@
+{
+  "name": "test1",
+  "test_config": "test1",
+  "moves": [
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    },
+    {
+      "z_inc": 0.5,
+      "direction": "UP"
+    }
+  ]
+}

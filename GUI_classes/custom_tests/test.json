@@ -1,0 +1,58 @@
+{
+  "name": "test",
+  "test_config": "test",
+  "moves": [
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    },
+    {
+      "z_inc": 0.3,
+      "direction": "DOWN"
+    }
+  ]
+}
